@@ -21,12 +21,21 @@ const ButtonExample = () => {
 
 /*** FUNCTIONS ***/
 import { f } from '../../common/common.functions.js'
+import { start } from '../controllers/socket.client.jsx'
 
 /*** MAIN ***/
 export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {}
+  }
+  start() {
+    start(1000, response => {
+      console.log(response)
+    })
+  }
+  componentWillMount() {
+    this.start()
   }
   render() {
     return (

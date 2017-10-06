@@ -92,16 +92,15 @@ import { routes } from './routes/index.server.js'
 routes(app /*, passport*/)
 
 /*** WEB SOCKETS ***/
-/*
 import http from 'http'
 const server = http.createServer(app)
 import socket from 'socket.io'
 const io = socket(server)
 import ioEvents from './routes/socket.server.js'
 ioEvents(io)
-*/
+
 /*** SERVE ***/
 const port = process.env.PORT
-app.listen(port, () => {
+server.listen(port, () => {
   console.log('Server is listening on port', port + '.')
 })
