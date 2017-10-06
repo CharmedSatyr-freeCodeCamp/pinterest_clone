@@ -1,5 +1,6 @@
 # Dist during development
 dist
+
 # Logs
 logs
 *.log

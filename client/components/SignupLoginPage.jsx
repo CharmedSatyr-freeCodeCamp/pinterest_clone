@@ -4,10 +4,6 @@
 //React
 import React, { Component } from 'react'
 
-//App
-
-//Button
-
 /*** MAIN ***/
 export default class SignupLoginPage extends Component {
   constructor(props) {

@@ -13,6 +13,7 @@ import sass from './styles/styles.scss'
 
 //App
 import App from './components/App.jsx'
+
 //Favicon
 import './img/favicon.ico'
 
