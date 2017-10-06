@@ -31,6 +31,7 @@ if (PROD) {
 app.use('/js', express.static(path + '/dist/js')) //The first argument creates the virtual directory used in index.html
 app.use('/styles', express.static(path + '/dist/styles'))
 app.use('/img', express.static(path + '/dist/img'))
+app.use('/fonts', express.static(path + '/dist/fonts'))
 
 /*** MONGOOSE ***/
 import mongoose from 'mongoose'
