@@ -8,11 +8,11 @@ import React, { Component } from 'react'
 import { Button, Icon } from 'semantic-ui-react'
 
 /*** MAIN ***/
-const NewPopupBtn = () => {
+const NewPopupBtn = ({ show }) => {
   return (
     <Button animated>
       <Button.Content visible>Next</Button.Content>
-      <Button.Content hidden>
+      <Button.Content hidden onClick={show}>
         <Icon name="right arrow" />
       </Button.Content>
     </Button>

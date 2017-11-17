@@ -15,8 +15,9 @@ export default class Popup extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="popup">
         <p>Hai who u. Maybe you r all abt adding a post hur</p>
+        <Button onClick={this.props.close}>Close</Button>
       </div>
     )
   }
