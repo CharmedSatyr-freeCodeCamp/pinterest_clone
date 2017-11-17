@@ -4,20 +4,9 @@
 //React
 import React, { Component } from 'react'
 
-//Semantic UI
-import { Button, Icon } from 'semantic-ui-react'
-
 //App
-const ButtonExample = () => {
-  return (
-    <Button animated>
-      <Button.Content visible>Next</Button.Content>
-      <Button.Content hidden>
-        <Icon name="right arrow" />
-      </Button.Content>
-    </Button>
-  )
-}
+import NavBar from './NavBar.jsx'
+import NewPopupBtn from './NewPopupBtn.jsx'
 
 /*** FUNCTIONS ***/
 import { f } from '../../common/common.functions.js'
@@ -40,11 +29,12 @@ export default class App extends Component {
   render() {
     return (
       <div>
+        <NavBar />
         <p>
           I think you are my favorite React app because you are the very last I need to do for a
           while.
         </p>
-        <ButtonExample />
+        <NewPopupBtn />
       </div>
     )
   }

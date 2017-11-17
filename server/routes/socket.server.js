@@ -6,8 +6,8 @@ const ioEvents = io => {
 
     serverSocket.on('start', received => {
       setInterval(() => {
-        console.log('here', received)
-        serverSocket.emit('start', 'Regular communications received...')
+        //console.log('here', received)
+        //serverSocket.emit('start', 'Regular communications received...')
       }, received)
     })
     io.on('disconnect', () => {
