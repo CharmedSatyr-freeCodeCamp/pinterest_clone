@@ -22,7 +22,6 @@
       "Pinterest"
    ],
    "scripts": {
-      "lint init": "eslint --init",
       "start": "npm-run-all --parallel watch:client watch:server",
       "build": "webpack --config webpack.config.babel.js",
       "watch:client": "webpack --watch --config webpack.config.babel.js",
