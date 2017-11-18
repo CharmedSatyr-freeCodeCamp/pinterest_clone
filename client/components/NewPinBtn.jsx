@@ -8,7 +8,7 @@ import React, { Component } from 'react'
 import { Button, Icon } from 'semantic-ui-react'
 
 /*** MAIN ***/
-const NewPopupBtn = ({ show }) => {
+const NewPinBtn = ({ show }) => {
   return (
     <Button animated>
       <Button.Content visible>Next</Button.Content>
@@ -19,4 +19,4 @@ const NewPopupBtn = ({ show }) => {
   )
 }
 
-export default NewPopupBtn
+export default NewPinBtn

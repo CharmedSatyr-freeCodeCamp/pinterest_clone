@@ -6,8 +6,8 @@ import React, { Component } from 'react'
 
 //App
 import NavBar from './NavBar.jsx'
-import NewPopupBtn from './NewPopupBtn.jsx'
-import Popup from './Popup.jsx'
+import NewPinBtn from './NewPinBtn.jsx'
+import NewPin from './NewPin.jsx'
 
 /*** FUNCTIONS ***/
 import { f } from '../../common/common.functions.js'
@@ -18,24 +18,24 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      popup: false
+      newpin: false
     }
-    this.showPopup = this.showPopup.bind(this)
-    this.closePopup = this.closePopup.bind(this)
+    this.showNewPin = this.showNewPin.bind(this)
+    this.closeNewPin = this.closeNewPin.bind(this)
   }
   start() {
     start(1000, response => {
       console.log(response)
     })
   }
-  showPopup() {
+  showNewPin() {
     this.setState({
-      popup: true
+      newpin: true
     })
   }
-  closePopup() {
+  closeNewPin() {
     this.setState({
-      popup: false
+      newpin: false
     })
   }
   componentWillMount() {
@@ -49,20 +49,18 @@ export default class App extends Component {
           I think you are my favorite React app because you are the very last I need to do for a
           while.
         </p>
-        {/*POPUP*/
-        this.state.popup ? (
-          <div className="container">
-            <Popup
-              className="popup"
-              close={() => {
-                this.closePopup()
-              }}
-            />
-          </div>
+        {/*New Pin*/
+        this.state.newpin ? (
+          <NewPin
+            className="newpin"
+            close={() => {
+              this.closeNewPin()
+            }}
+          />
         ) : null}
-        <NewPopupBtn
+        <NewPinBtn
           show={() => {
-            this.showPopup()
+            this.showNewPin()
           }}
         />
       </div>
