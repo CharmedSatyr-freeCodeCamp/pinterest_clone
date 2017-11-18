@@ -5,17 +5,20 @@
 import React, { Component } from 'react'
 
 //Semantic UI
-import { Button, Icon } from 'semantic-ui-react'
+import { Button, Popup } from 'semantic-ui-react'
+
+//App
+import NewPin from './NewPin.jsx'
 
 /*** MAIN ***/
 const NewPinBtn = ({ show }) => {
   return (
-    <Button animated>
-      <Button.Content visible>Next</Button.Content>
-      <Button.Content hidden onClick={show}>
-        <Icon name="right arrow" />
-      </Button.Content>
-    </Button>
+    <Popup
+      trigger={<Button color="blue" icon="plus" content="New Pin" />}
+      content={<NewPin className="newpin" />}
+      on="click"
+      position="bottom left"
+    />
   )
 }
 

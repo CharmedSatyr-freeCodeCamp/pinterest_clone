@@ -2,14 +2,14 @@ body {
   margin: 75px;
 }
 
-.container {
-  display: flex;
-  justify-content: center;
-}
-
 .newpin {
   background: yellow;
   border: 1px solid red;
-  height: 100px;
-  width: 200px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.pinImg, .center, #pinTitle {
+  align-self: center;
 }
