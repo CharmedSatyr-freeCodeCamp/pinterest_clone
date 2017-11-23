@@ -3,13 +3,7 @@ body {
 }
 
 .newpin {
-  background: yellow;
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   padding: 10px;
-}
-
-.pinImg, .center, #pinTitle {
-  align-self: center;
 }
