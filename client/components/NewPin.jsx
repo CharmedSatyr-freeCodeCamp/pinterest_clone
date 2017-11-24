@@ -5,7 +5,10 @@
 import React, { Component } from 'react'
 
 //Semantic UI
-import { Button, Image, Input } from 'semantic-ui-react'
+import { Button, Header, Image, Input } from 'semantic-ui-react'
+
+/*** FUNCTIONS ***/
+import { f } from '../../common/common.functions.js'
 
 //App
 import dummy from '../img/image.png'
@@ -16,7 +19,8 @@ export default class NewPin extends Component {
     super(props)
     this.state = {
       title: 'Add a Title!',
-      image: dummy
+      image: dummy,
+      user: this.props.user
     }
     this.handleTitle = this.handleTitle.bind(this)
     this.handleImg = this.handleImg.bind(this)
@@ -32,12 +36,13 @@ export default class NewPin extends Component {
     this.setState({
       image: image
     })
-    console.log(image)
   }
   render() {
     return (
       <div className="newpin">
-        <h1 className="center">{this.state.title}</h1>
+        <Header as="h1" textAlign="center">
+          {this.state.title}
+        </Header>
         <Image src={this.state.image} />
         <br />
         <Input id="pinTitle" placeholder="Title" onChange={this.handleTitle} />
@@ -46,7 +51,14 @@ export default class NewPin extends Component {
         <br />
         <Button
           onClick={() => {
-            console.log('submit')
+            const obj = {
+              title: this.state.title,
+              img: this.state.image
+            }
+            const data = encodeURIComponent(JSON.stringify(obj))
+            f('POST', '/api/' + this.state.user + '/savePin/' + data, response => {
+              console.log(response)
+            })
           }}
         >
           Submit
