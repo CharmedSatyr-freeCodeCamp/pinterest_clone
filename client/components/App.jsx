@@ -21,7 +21,7 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      loggedUser: 'CharmedSatyr',
+      loggedUser: 'Stranger',
       allPins: []
     }
   }
