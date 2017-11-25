@@ -7,11 +7,15 @@ import React, { Component } from 'react'
 //Semantic UI
 import { Button, Header, Image, Input } from 'semantic-ui-react'
 
-/*** FUNCTIONS ***/
-import { f } from '../../common/common.functions.js'
-
 //App
 import dummy from '../img/image.png'
+
+/*** FUNCTIONS ***/
+//Common
+import { f } from '../../common/common.functions.js'
+
+//Validate image URLs
+import isURL from 'validator/lib/isURL'
 
 /*** MAIN ***/
 export default class NewPin extends Component {
@@ -22,19 +26,32 @@ export default class NewPin extends Component {
       image: dummy,
       user: this.props.user
     }
+    this.handleSubmit = this.handleSubmit.bind(this)
     this.handleTitle = this.handleTitle.bind(this)
     this.handleImg = this.handleImg.bind(this)
+  }
+  handleSubmit() {
+    const obj = {
+      title: this.state.title !== 'Add a Title!' ? this.state.title : 'Untitled',
+      img: this.state.image
+    }
+    const data = encodeURIComponent(JSON.stringify(obj))
+    f('POST', '/api/' + this.state.user + '/savePin/' + data, response => {
+      console.log(response)
+    })
+  }
+  handleImg() {
+    const image = document.getElementById('pinImg').value
+    if (isURL(image)) {
+      this.setState({
+        image: image
+      })
+    }
   }
   handleTitle() {
     const title = document.getElementById('pinTitle').value
     this.setState({
       title: title
-    })
-  }
-  handleImg() {
-    const image = document.getElementById('pinImg').value
-    this.setState({
-      image: image
     })
   }
   render() {
@@ -47,18 +64,15 @@ export default class NewPin extends Component {
         <br />
         <Input id="pinTitle" placeholder="Title" onChange={this.handleTitle} />
         <br />
-        <Input id="pinImg" placeholder="https://www.img-site.com" onChange={this.handleImg} />
+        <Input
+          id="pinImg"
+          placeholder="https://www.website.com/photo.jpg"
+          onChange={this.handleImg}
+        />
         <br />
         <Button
           onClick={() => {
-            const obj = {
-              title: this.state.title,
-              img: this.state.image
-            }
-            const data = encodeURIComponent(JSON.stringify(obj))
-            f('POST', '/api/' + this.state.user + '/savePin/' + data, response => {
-              console.log(response)
-            })
+            this.handleSubmit()
           }}
         >
           Submit
