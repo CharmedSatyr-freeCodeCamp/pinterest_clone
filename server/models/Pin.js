@@ -16,7 +16,7 @@ const Pin = new Schema({
   },
   likes: [String],
   title: { type: String, required: true },
-  user: String
+  owner: { type: String, required: true }
 })
 
 export default mongoose.model('Pin', Pin)

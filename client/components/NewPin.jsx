@@ -24,7 +24,7 @@ export default class NewPin extends Component {
     this.state = {
       title: 'Add a Title!',
       image: dummy,
-      user: this.props.user
+      owner: this.props.owner
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleTitle = this.handleTitle.bind(this)
@@ -33,10 +33,11 @@ export default class NewPin extends Component {
   handleSubmit() {
     const obj = {
       title: this.state.title !== 'Add a Title!' ? this.state.title : 'Untitled',
-      img: this.state.image
+      img: this.state.image,
+      owner: this.state.owner
     }
     const data = encodeURIComponent(JSON.stringify(obj))
-    f('POST', '/api/' + this.state.user + '/savePin/' + data, response => {
+    f('POST', '/api/savePin/' + data, response => {
       console.log(response)
     })
   }

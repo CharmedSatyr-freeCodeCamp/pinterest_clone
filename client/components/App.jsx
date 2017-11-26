@@ -29,21 +29,17 @@ export default class App extends Component {
     const cb1 = response => {
       console.log(response)
     }
-
     const cb2 = response => {
       if (response !== this.state.allPins) {
         this.setState({ allPins: response })
       }
     }
-
     start(1000, cb1, cb2)
-
     console.log('Welcome, ' + user + '!')
   }
   loggedUser() {
     f('GET', '/api/users/logged', response => {
       this.setState({ loggedUser: response })
-
       //Start web socket updates
       this.start(response)
     })
@@ -59,9 +55,9 @@ export default class App extends Component {
           I think you are my favorite React app because you are the very last I need to do for a
           while.
         </p>
-        <NewPinBtn user={this.state.loggedUser} />
+        <NewPinBtn owner={this.state.loggedUser} />
         <Divider />
-        <PinGrid allPins={this.state.allPins} />
+        <PinGrid allPins={this.state.allPins} loggedUser={this.state.loggedUser} />
       </div>
     )
   }

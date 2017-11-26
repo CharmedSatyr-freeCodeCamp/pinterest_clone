@@ -11,11 +11,11 @@ import { Grid } from 'semantic-ui-react'
 import Pin from './Pin.jsx'
 
 /*** MAIN ***/
-const PinGrid = ({ allPins }) => {
+const PinGrid = ({ allPins, loggedUser }) => {
   const all = allPins.map((item, index) => {
     return (
       <Grid.Column key={index}>
-        <Pin title={item.title} img={item.img} />
+        <Pin title={item.title} img={item.img} owner={item.owner} loggedUser={loggedUser} />
       </Grid.Column>
     )
   })

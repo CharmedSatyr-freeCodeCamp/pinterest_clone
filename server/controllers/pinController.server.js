@@ -27,13 +27,13 @@ export const savePin = (req, res) => {
   const obj = JSON.parse(decodeURIComponent(req.params.data))
   const title = obj.title
   const img = obj.img
-  const user = req.params.user
+  const owner = obj.owner
 
   Pin.findOne(
     {
       title: title,
       img: img,
-      user: user
+      owner: owner
     },
     (err, doc) => {
       if (err) {
@@ -45,15 +45,38 @@ export const savePin = (req, res) => {
         const newPin = new Pin({
           title: title,
           img: img,
-          user: user
+          owner: owner
         })
         newPin.save((err, doc) => {
           if (err) {
             console.error(err)
           }
-          res.json('Your pin has been saved! Praise Jesus!')
-          console.log('SAVED PIN: ', doc)
+          res.json('Your pin has been saved!')
         })
+      }
+    }
+  )
+}
+
+//Delete Pin
+export const deletePin = (req, res) => {
+  const obj = JSON.parse(decodeURIComponent(req.params.data))
+  const title = obj.title
+  const img = obj.img
+  const owner = obj.owner
+
+  Pin.remove(
+    {
+      title: title,
+      img: img,
+      owner: owner
+    },
+    (err, doc) => {
+      if (err) {
+        console.error(err)
+      }
+      if (doc) {
+        res.json('Your pin has been deleted.')
       }
     }
   )

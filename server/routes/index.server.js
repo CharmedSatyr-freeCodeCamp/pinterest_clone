@@ -1,7 +1,7 @@
 'use strict'
 const path = process.cwd()
 
-import { allPins, savePin, unpinAll } from '../controllers/pinController.server.js'
+import { allPins, savePin, deletePin, unpinAll } from '../controllers/pinController.server.js'
 
 export const routes = (app /*, passport*/) => {
   //Main
@@ -9,8 +9,11 @@ export const routes = (app /*, passport*/) => {
     res.sendFile(path + '/dist/index.html')
   })
 
-  //Save new pin by user
-  app.route('/api/:user/savePin/:data').post(savePin)
+  //Save new pin
+  app.route('/api/savePin/:data').post(savePin)
+
+  //Delete pin
+  app.route('/api/deletePin/:data').delete(deletePin)
 
   //All pins
   app.route('/api/allPins').get(allPins)
