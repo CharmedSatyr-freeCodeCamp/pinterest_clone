@@ -15,6 +15,7 @@ const Pin = new Schema({
     default: '../../client/img/image.png' //This is redundant from default client state
   },
   likes: [String],
+  shares: [String],
   title: { type: String, required: true },
   owner: { type: String, required: true }
 })
