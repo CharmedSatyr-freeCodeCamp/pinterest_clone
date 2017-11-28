@@ -1,12 +1,23 @@
 'use strict'
 const path = process.cwd()
 
-import { allPins, savePin, deletePin, unpinAll } from '../controllers/pinController.server.js'
+import {
+  allPins,
+  savePin,
+  deletePin,
+  toggleLikePin,
+  unpinAll
+} from '../controllers/pinController.server.js'
 
 export const routes = (app /*, passport*/) => {
   //Main
   app.route('/').get((req, res) => {
     res.sendFile(path + '/dist/index.html')
+  })
+
+  //Get loggedUser
+  app.route('/api/users/logged').get((req, res) => {
+    res.json('LoggedSatyr')
   })
 
   //Save new pin
@@ -18,10 +29,8 @@ export const routes = (app /*, passport*/) => {
   //All pins
   app.route('/api/allPins').get(allPins)
 
-  //Get loggedUser
-  app.route('/api/users/logged').get((req, res) => {
-    res.json('LoggedSatyr')
-  })
+  //Like or unlike a pin
+  app.route('/api/toggleLikePin/:data').post(toggleLikePin)
 
   /*** DEBUGGING - No UI ***/
   //Delete all pins
