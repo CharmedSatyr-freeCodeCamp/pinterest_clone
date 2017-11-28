@@ -22,9 +22,9 @@ export default class Pin extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      likes: this.props.likes.length,
-      loggedUserLike: this.props.loggedUserLike
-      //      loggedUserShare: false
+      //likes: this.props.likes.length,
+      //loggedUserLike: this.props.loggedUserLike
+      //loggedUserShare: false
     }
     this.addDefaultSrc = this.addDefaultSrc.bind(this)
     this.toggleLikePin = this.toggleLikePin.bind(this)
@@ -39,8 +39,10 @@ export default class Pin extends Component {
     /*These state changes are *only* required       *
      *to make the Like button respond more quickly. *
      *Database information about Likes is passed via*
-     *props and automatically saves/updates.        */
-    if (this.state.loggedUserLike === false) {
+     *props and automatically saves/updates. Not    *
+     *using because of a bug - Likes wrongly keep   *
+     *their screen position on add/delete Pin.      */
+    /*if (this.state.loggedUserLike === false) {
       this.setState({
         likes: this.state.likes + 1,
         loggedUserLike: true
@@ -50,7 +52,7 @@ export default class Pin extends Component {
         likes: this.state.likes - 1,
         loggedUserLike: false
       })
-    }
+    }*/
     const obj = {
       title: this.props.title,
       img: this.props.img,
@@ -98,7 +100,7 @@ export default class Pin extends Component {
         {this.props.shares.length}
         */}
         {/* Like button */}
-        {this.state.loggedUserLike ? (
+        {/*this.state.loggedUserLike*/ this.props.loggedUserLike ? (
           <Icon
             link
             name="heart"
@@ -118,7 +120,8 @@ export default class Pin extends Component {
             }}
           />
         )}
-        {this.state.likes}
+        {/*this.state.likes*/}
+        {this.props.likes.length}
         <span style={{ float: 'right' }}>{this.props.owner}</span>
       </span>
     )
