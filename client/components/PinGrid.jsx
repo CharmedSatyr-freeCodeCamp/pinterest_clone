@@ -30,7 +30,7 @@ const PinGrid = ({ gridPins, loggedUser }) => {
     )
   })
   return (
-    <Grid container celled stackable columns={3}>
+    <Grid container celled="internally" stackable columns={3}>
       {show}
     </Grid>
   )
