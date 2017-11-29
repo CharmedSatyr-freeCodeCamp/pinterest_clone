@@ -5,12 +5,11 @@
 import React, { Component } from 'react'
 
 //Semanti UI
-import { Divider } from 'semantic-ui-react'
+import { Divider, Header } from 'semantic-ui-react'
 
 //App
-import NavBar from './NavBar.jsx'
-import NewPinBtn from './NewPinBtn.jsx'
 import PinGrid from './PinGrid.jsx'
+import NavBar from './NavBar.jsx'
 
 /*** FUNCTIONS ***/
 import { f } from '../../common/common.functions.js'
@@ -22,8 +21,12 @@ export default class App extends Component {
     super(props)
     this.state = {
       loggedUser: 'Stranger',
-      allPins: []
+      allPins: [],
+      showLoggedUserPins: false,
+      showAllPins: true
     }
+    this.showAllPins = this.showAllPins.bind(this)
+    this.showLoggedUserPins = this.showLoggedUserPins.bind(this)
   }
   start(user) {
     const cb1 = response => {
@@ -44,20 +47,43 @@ export default class App extends Component {
       this.start(response)
     })
   }
+  showAllPins() {
+    this.setState({ showAllPins: true, showLoggedUserPins: false })
+  }
+  showLoggedUserPins() {
+    this.setState({ showAllPins: false, showLoggedUserPins: true })
+  }
   componentWillMount() {
     this.loggedUser()
   }
   render() {
+    const loggedUserPins = this.state.allPins.filter(item => {
+      return item.owner === this.state.loggedUser
+    })
     return (
       <div>
-        <NavBar />
-        <p>
-          I think you are my favorite React app because you are the very last I need to do for a
-          while.
-        </p>
-        <NewPinBtn owner={this.state.loggedUser} />
-        <Divider />
-        <PinGrid allPins={this.state.allPins} loggedUser={this.state.loggedUser} />
+        <NavBar
+          showAllPins={() => {
+            this.showAllPins()
+          }}
+          showLoggedUserPins={() => {
+            this.showLoggedUserPins()
+          }}
+          loggedUser={this.state.loggedUser}
+        />
+        {this.state.showLoggedUserPins ? (
+          <span>
+            <Header as="h1">Your Pins</Header>
+            <Divider />
+            <PinGrid gridPins={loggedUserPins} loggedUser={this.state.loggedUser} />
+          </span>
+        ) : (
+          <span>
+            <Header as="h1">Recent Pins</Header>
+            <Divider />
+            <PinGrid gridPins={this.state.allPins} loggedUser={this.state.loggedUser} />
+          </span>
+        )}
       </div>
     )
   }

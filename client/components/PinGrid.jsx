@@ -11,14 +11,11 @@ import { Grid } from 'semantic-ui-react'
 import Pin from './Pin.jsx'
 
 /*** MAIN ***/
-const PinGrid = ({ allPins, loggedUser }) => {
-  const all = allPins.map((item, index) => {
-    let loggedUserLike = false
-    if (item.likes.indexOf(loggedUser) >= 0) {
-      loggedUserLike = true
-    } else {
-      loggedUserLike = false
-    }
+const PinGrid = ({ gridPins, loggedUser }) => {
+  const show = gridPins.map((item, index) => {
+    //Check to see if the loggedUser liked the Pin already
+    const loggedUserLike = item.likes.indexOf(loggedUser) >= 0 ? true : false
+
     return (
       <Grid.Column key={index}>
         <Pin
@@ -26,7 +23,6 @@ const PinGrid = ({ allPins, loggedUser }) => {
           img={item.img}
           owner={item.owner}
           likes={item.likes}
-          shares={item.shares}
           loggedUser={loggedUser}
           loggedUserLike={loggedUserLike}
         />
@@ -35,7 +31,7 @@ const PinGrid = ({ allPins, loggedUser }) => {
   })
   return (
     <Grid container celled stackable columns={3}>
-      {all}
+      {show}
     </Grid>
   )
 }

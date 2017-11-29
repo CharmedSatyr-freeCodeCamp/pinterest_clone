@@ -17,7 +17,7 @@ export const routes = (app /*, passport*/) => {
 
   //Get loggedUser
   app.route('/api/users/logged').get((req, res) => {
-    res.json('LoggedSatyr')
+    res.json('secondSatyr')
   })
 
   //Save new pin
