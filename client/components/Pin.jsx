@@ -64,19 +64,28 @@ export default class Pin extends Component {
     return (
       <div>
         {/* Only show the Remove button to the pin's owner */}
-        {this.props.loggedUser === this.props.owner ? (
-          <Icon
-            link
-            name="remove"
-            color="red"
-            size="large"
-            onClick={() => {
-              this.deletePin()
-            }}
-          />
-        ) : null}
         <Header as="h3" textAlign="center">
           {this.props.title}
+          {this.props.loggedUser === this.props.owner ? (
+            <Icon
+              link
+              fitted
+              name="remove"
+              color="red"
+              size="large"
+              onClick={() => {
+                this.deletePin()
+              }}
+              style={{
+                float: 'right',
+                marginLeft: -25,
+                marginRight: 0,
+                marginTop: 0,
+                marginBottom: 0,
+                padding: 0
+              }}
+            />
+          ) : null}
         </Header>
         <Image src={url ? this.props.img : dummy} onError={this.addDefaultSrc} />
 
