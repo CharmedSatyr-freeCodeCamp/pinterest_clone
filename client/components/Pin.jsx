@@ -75,7 +75,7 @@ export default class Pin extends Component {
             }}
           />
         ) : null}
-        <Header as="h1" textAlign="center">
+        <Header as="h3" textAlign="center">
           {this.props.title}
         </Header>
         <Image src={url ? this.props.img : dummy} onError={this.addDefaultSrc} />
