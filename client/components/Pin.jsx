@@ -51,7 +51,7 @@ export default class Pin extends Component {
     const obj = {
       title: this.props.title,
       img: this.props.img,
-      owner: this.props.loggedUser,
+      owner: this.props.owner,
       loggedUser: this.props.loggedUser
     }
     const data = encodeURIComponent(JSON.stringify(obj))
