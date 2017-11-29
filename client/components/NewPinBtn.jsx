@@ -11,7 +11,7 @@ import { Button, Popup } from 'semantic-ui-react'
 import NewPin from './NewPin.jsx'
 
 /*** MAIN ***/
-const NewPinBtn = ({ show, owner }) => {
+const NewPinBtn = ({ owner }) => {
   return (
     <Popup
       trigger={<Button color="blue" icon="plus" content="New Pin" />}

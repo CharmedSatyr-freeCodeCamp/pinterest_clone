@@ -7,7 +7,8 @@ import React, { Component } from 'react'
 //Semantic UI
 import { Button, Header, Image, Input } from 'semantic-ui-react'
 
-//App
+/*** Image ***/
+//Dummy Image
 import dummy from '../img/image.png'
 
 /*** FUNCTIONS ***/
@@ -38,7 +39,7 @@ export default class NewPin extends Component {
     }
     const data = encodeURIComponent(JSON.stringify(obj))
     f('POST', '/api/savePin/' + data, response => {
-      console.log(response)
+      //console.log(response)
     })
   }
   handleImg() {
