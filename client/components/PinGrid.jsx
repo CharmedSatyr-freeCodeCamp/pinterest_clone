@@ -4,7 +4,7 @@
 //React
 import React, { Component } from 'react'
 
-//Semantic UI
+//Semantic UI React
 import { Grid } from 'semantic-ui-react'
 
 //App

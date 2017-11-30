@@ -4,12 +4,12 @@
 //React
 import React, { Component } from 'react'
 
-//Semanti UI
+//Semantic UI React
 import { Divider, Header } from 'semantic-ui-react'
 
 //App
-import PinGrid from './PinGrid.jsx'
 import NavBar from './NavBar.jsx'
+import PinGrid from './PinGrid.jsx'
 
 /*** FUNCTIONS ***/
 import { f } from '../../common/common.functions.js'
@@ -57,6 +57,7 @@ export default class App extends Component {
     this.loggedUser()
   }
   render() {
+    //Filter allPins for those made by the loggedUser
     const loggedUserPins = this.state.allPins.filter(item => {
       return item.owner === this.state.loggedUser
     })
