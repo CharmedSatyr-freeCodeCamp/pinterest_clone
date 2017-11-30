@@ -4,7 +4,7 @@
 //React
 import React, { Component } from 'react'
 
-//Semantic UI
+//Semantic UI React
 import { Container, Image, Menu } from 'semantic-ui-react'
 
 //App
@@ -32,7 +32,7 @@ const NavBar = ({ loggedUser, showAllPins, showLoggedUserPins }) => {
         <Menu.Item as="a" onClick={showAllPins}>
           Recent Pins
         </Menu.Item>
-        <Menu.Item as="a" position="right">
+        <Menu.Item as="a" href="/logout" position="right">
           Log Out
         </Menu.Item>
       </Container>
