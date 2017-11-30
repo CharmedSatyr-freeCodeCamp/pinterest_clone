@@ -6,7 +6,7 @@ import HTMLWebpackPlugin from 'html-webpack-plugin'
 import webpack from 'webpack'
 import nodeExternals from 'webpack-node-externals'
 
-/*** TOOLS ***/
+/*** DEVELOPMENT TOOLS ***/
 dotenv.load()
 const PROD = process.env.NODE_ENV === 'production'
 
@@ -118,7 +118,7 @@ const client = {
   },
   output: {
     path: __dirname + '/dist',
-    filename: PROD ? 'js/[name].client.min.js' : 'js/[name].client.js'
+    filename: 'js/[name].client.bundle.js'
   },
   target: 'web',
   node: nodeConfig,
@@ -168,7 +168,7 @@ const server = {
   entry: ['babel-polyfill', __dirname + '/server/server.js'],
   output: {
     path: __dirname + '/dist',
-    filename: PROD ? 'server.bundle.min.js' : 'server.bundle.js'
+    filename: 'server.bundle.js'
   },
   devtool: PROD ? false : 'source-map',
   module: {
