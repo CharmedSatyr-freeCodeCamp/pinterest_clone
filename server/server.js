@@ -46,7 +46,6 @@ mongoose.connect(process.env.MONGO_URI, { useMongoClient: true }, (err, db) => {
 })
 
 /*** AUTHENTICATION ***/
-/*
 import session from 'express-session'
 import passport from 'passport'
 
@@ -69,7 +68,7 @@ let sess = {
     maxAge: 1800000 //30 minutes
   },
   store: new MongoStore({ mongooseConnection: db }, err => {
-    console.log(err)
+    console.error(err)
   }), //defaults to MemoryStore instance, which can cause memory leaks
   name: 'id'
 }
@@ -83,13 +82,12 @@ if (PROD) {
 app.use(session(sess))
 app.use(passport.initialize())
 app.use(passport.session())
-*/
-/*** ROUTES ***/
 
+/*** ROUTES ***/
 import { routes } from './routes/index.server.js'
-//import { authConfig } from './config/authConfig.js'
-//authConfig(passport)
-routes(app /*, passport*/)
+import { authConfig } from './config/authConfig.js'
+authConfig(passport)
+routes(app, passport)
 
 /*** WEB SOCKETS ***/
 import http from 'http'

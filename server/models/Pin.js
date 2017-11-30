@@ -8,7 +8,8 @@ const Pin = new Schema({
   created: {
     type: Date,
     required: true,
-    default: new Date()
+    default: new Date(),
+    expires: '365d'
   },
   img: {
     type: String,

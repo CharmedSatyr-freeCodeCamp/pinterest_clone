@@ -41,7 +41,7 @@ const uglyConfig = new webpack.optimize.UglifyJsPlugin({ ie8: false, ecma: 8 })
 const client = {
   entry: {
     index: [__dirname + '/client/index.jsx', 'babel-polyfill'],
-    welcome: [__dirname + '/client/welcome.jsx']
+    login: [__dirname + '/client/login.jsx', 'babel-polyfill']
   },
   devtool: PROD ? false : 'source-map',
   module: {
@@ -132,8 +132,8 @@ const client = {
         }),
         new HTMLWebpackPlugin({
           title: 'Test',
-          template: __dirname + '/client/' + 'welcome.html',
-          filename: __dirname + '/dist/' + 'welcome.html',
+          template: __dirname + '/client/' + 'login.html',
+          filename: __dirname + '/dist/' + 'login.html',
           inject: false //'body' // Injects *all* scripts and css if enabled
         }),
         new ExtractTextPlugin({
@@ -152,8 +152,8 @@ const client = {
         }),
         new HTMLWebpackPlugin({
           title: 'Test',
-          template: __dirname + '/client/' + 'welcome.html',
-          filename: __dirname + '/dist/' + 'welcome.html',
+          template: __dirname + '/client/' + 'login.html',
+          filename: __dirname + '/dist/' + 'login.html',
           inject: false //'body' // Injects *all* scripts and css if enabled
         }),
         new ExtractTextPlugin({
