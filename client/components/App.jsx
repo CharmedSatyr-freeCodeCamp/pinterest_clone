@@ -1,5 +1,14 @@
 'use strict'
 
+/*** ENVIRONMENT ***/
+const path = process.cwd()
+import dotenv from 'dotenv'
+dotenv.load()
+
+/*** DEVELOPMENT TOOLS ***/
+const DEV = process.env.NODE_ENV === 'development'
+console.log('DEV?', DEV)
+
 /*** COMPONENTS ***/
 //React
 import React, { Component } from 'react'
@@ -20,18 +29,26 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      loggedUser: 'Stranger',
+      loggedUser: 'Client',
       allPins: [],
       showLoggedUserPins: false,
       showAllPins: true
     }
+    this.loggedUser = this.loggedUser.bind(this)
     this.showAllPins = this.showAllPins.bind(this)
     this.showLoggedUserPins = this.showLoggedUserPins.bind(this)
   }
   start(user) {
-    const cb1 = response => {
-      console.log(response)
+    if (DEV) {
+      console.log('Calling start function; user:', user)
     }
+    //Indicates Web Socket connection - VERBOSE!
+    const cb1 = response => {
+      if (DEV) {
+        console.log(response)
+      }
+    }
+    //Keeps allPins up to date for all users without browser refresh
     const cb2 = response => {
       if (response !== this.state.allPins) {
         this.setState({ allPins: response })
@@ -42,6 +59,9 @@ export default class App extends Component {
   }
   loggedUser() {
     f('GET', '/api/users/logged', response => {
+      if (DEV) {
+        console.log('Received username:', response)
+      }
       this.setState({ loggedUser: response })
       //Start web socket updates
       this.start(response)
@@ -54,6 +74,9 @@ export default class App extends Component {
     this.setState({ showAllPins: false, showLoggedUserPins: true })
   }
   componentWillMount() {
+    if (DEV) {
+      console.log('Will mount App...')
+    }
     this.loggedUser()
   }
   render() {

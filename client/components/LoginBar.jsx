@@ -7,8 +7,6 @@ import React, { Component } from 'react'
 //Semantic UI React
 import { Container, Image, Icon, Menu } from 'semantic-ui-react'
 
-//App
-
 /*** RESOURCES ***/
 //Satyr
 import satyr from '../img/favicon.ico'

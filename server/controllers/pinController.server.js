@@ -1,5 +1,13 @@
 'use strict'
 
+/*** ENVIRONMENT ***/
+const path = process.cwd()
+import dotenv from 'dotenv'
+dotenv.load()
+
+/*** DEVELOPMENT TOOLS ***/
+const DEV = process.env.NODE_ENV === 'development'
+
 /*** MODEL ***/
 import Pin from '../models/Pin.js'
 
@@ -27,11 +35,15 @@ export const toggleLikePin = (req, res) => {
         if (doc.likes.indexOf(user) >= 0) {
           //Remove the like
           doc.likes.splice(doc.likes.indexOf(user), 1)
-          console.log('This pin has been unliked!')
+          if (DEV) {
+            console.log('This pin has been unliked!')
+          }
         } else {
           //Otherwise add it
           doc.likes.push(user)
-          console.log('This pin has been liked!')
+          if (DEV) {
+            console.log('This pin has been liked!')
+          }
         }
         //Save what happened
         doc.save((err, result) => {
