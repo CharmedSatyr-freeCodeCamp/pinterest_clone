@@ -4,9 +4,9 @@ https://www.freecodecamp.org/challenges/build-a-pinterest-clone
 
 ***
 
-**Date Completed:** N/A
+**Date Completed:** December 1, 2017
 
-**See the project on Heroku at:** N/A
+**See the project on Heroku at:** https://sorcerer-city.herokuapp.com/
 
 ***
 
