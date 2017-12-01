@@ -23,9 +23,9 @@ DEV ? app.use(morgan('dev')) : app.use(morgan('tiny'))
 console.log('DEV?', DEV)
 
 /*** ENABLE COMPRESSION ***/
-import compression from 'compression'
+//import compression from 'compression'
 if (PROD) {
-  app.use(compression())
+  //  app.use(compression())
 }
 
 /*** MIDDLEWARE ***/
