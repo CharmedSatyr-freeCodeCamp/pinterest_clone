@@ -20,7 +20,9 @@ const DEV = process.env.NODE_ENV === 'development'
 const PROD = process.env.NODE_ENV === 'production'
 import morgan from 'morgan'
 DEV ? app.use(morgan('dev')) : app.use(morgan('tiny'))
-console.log('DEV?', DEV)
+if (DEV) {
+  console.log('Development mode')
+}
 
 /*** ENABLE COMPRESSION ***/
 //import compression from 'compression'
