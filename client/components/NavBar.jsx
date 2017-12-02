@@ -24,7 +24,7 @@ const NavBar = ({ loggedUser, showAllPins, showLoggedUserPins }) => {
           Welcome, {loggedUser}
         </Menu.Item>
         <Menu.Item>
-          <NewPin owner={loggedUser} />
+          <NewPin loggedUser={loggedUser} />
         </Menu.Item>
         <Menu.Item as="a" onClick={showLoggedUserPins}>
           Your Pins

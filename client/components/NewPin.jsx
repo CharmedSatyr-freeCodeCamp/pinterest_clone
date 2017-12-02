@@ -25,8 +25,7 @@ export default class NewPin extends Component {
     this.state = {
       modalOpen: false,
       title: 'Add a Title!',
-      image: dummy,
-      owner: this.props.owner
+      image: dummy
     }
     this.handleClose = this.handleClose.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
@@ -52,7 +51,7 @@ export default class NewPin extends Component {
     const obj = {
       title: this.state.title !== 'Add a Title!' ? this.state.title : 'Untitled',
       img: this.state.image,
-      owner: this.state.owner
+      owner: this.props.loggedUser
     }
     const data = encodeURIComponent(JSON.stringify(obj))
     f('POST', '/api/savePin/' + data, response => {
