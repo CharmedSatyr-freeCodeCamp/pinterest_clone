@@ -65,8 +65,11 @@ export default class Pin extends Component {
     return (
       <Card fluid raised>
         {/* Only show the Remove button to the pin's owner */}
-        <Modal trigger={<Image src={url ? img : dummy} onError={this.addDefaultSrc} />} closeIcon>
-          <Image alt={title} centered src={img} />
+        <Modal
+          trigger={<Image alt={title} onError={this.addDefaultSrc} src={url ? img : dummy} />}
+          closeIcon
+        >
+          <Image centered alt={title} onError={this.addDefaultSrc} src={url ? img : dummy} />
           <Modal.Header>{title}</Modal.Header>
           <Modal.Content image>
             <Modal.Description>

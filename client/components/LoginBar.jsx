@@ -17,7 +17,14 @@ const LoginBar = () => {
     <Menu fixed="top" inverted>
       <Container>
         <Menu.Item header>
-          {<Image size="mini" src={glowsatyr} style={{ marginRight: '1.5em' }} />}
+          {
+            <Image
+              alt="Glowing Black Satyr"
+              size="mini"
+              src={glowsatyr}
+              style={{ marginRight: '1.5em' }}
+            />
+          }
           Welcome to Sorcerer City, a fantasy-themed Pinterest clone built for freeCodeCamp
         </Menu.Item>
         <Menu.Item as="a" href="/auth/github" position="right">

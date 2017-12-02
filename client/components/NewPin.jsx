@@ -98,7 +98,7 @@ export default class NewPin extends Component {
             <Header as="h1" textAlign="center">
               {this.state.title}
             </Header>
-            <Image src={this.state.image} />
+            <Image alt={this.state.title} src={this.state.image} />
             <br />
             <Input id="pinTitle" placeholder="Enter a short title" onChange={this.handleTitle} />
             <br />

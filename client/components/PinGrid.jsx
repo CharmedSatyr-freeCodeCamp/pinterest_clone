@@ -5,7 +5,7 @@
 import React, { Component } from 'react'
 
 //Semantic UI React
-import { Grid, Icon, Image, Modal } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 
 //App
 import Pin from './Pin.jsx'
