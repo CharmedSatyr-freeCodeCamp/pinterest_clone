@@ -17,6 +17,7 @@ import { f } from '../../common/common.functions.js'
 
 //Validate image URLs
 import isURL from 'validator/lib/isURL'
+import blacklist from 'validator/lib/blacklist'
 
 /*** MAIN ***/
 export default class NewPin extends Component {
@@ -38,6 +39,7 @@ export default class NewPin extends Component {
   }
   handleImg() {
     const image = document.getElementById('pinImg').value
+    //URL is validated by validator package
     if (isURL(image)) {
       this.setState({
         image: image
@@ -60,10 +62,15 @@ export default class NewPin extends Component {
     })
   }
   handleTitle() {
+    //Title can be no more than 40 characters and can't contain `{}<>`
     const title = document.getElementById('pinTitle').value
-    this.setState({
-      title: title
-    })
+    const safe = blacklist(title, '\\{\\}\\<\\>')
+    const t = safe.split('').length
+    if (t <= 40) {
+      this.setState({
+        title: safe
+      })
+    }
   }
   render() {
     return (
@@ -93,7 +100,7 @@ export default class NewPin extends Component {
             </Header>
             <Image src={this.state.image} />
             <br />
-            <Input id="pinTitle" placeholder="Title" onChange={this.handleTitle} />
+            <Input id="pinTitle" placeholder="Enter a short title" onChange={this.handleTitle} />
             <br />
             <Input
               id="pinImg"

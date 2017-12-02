@@ -64,7 +64,6 @@ export default class Pin extends Component {
     return (
       <Card fluid raised>
         {/* Only show the Remove button to the pin's owner */}
-
         <Image src={url ? this.props.img : dummy} onError={this.addDefaultSrc} />
         <Card.Content extra>
           <Card.Header textAlign="center">

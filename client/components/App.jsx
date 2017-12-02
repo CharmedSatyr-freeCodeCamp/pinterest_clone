@@ -15,10 +15,8 @@ if (DEV) {
 //React
 import React, { Component } from 'react'
 
-//Semantic UI React
-import { Divider, Header } from 'semantic-ui-react'
-
 //App
+import Footer from './Footer.jsx'
 import NavBar from './NavBar.jsx'
 import PinGrid from './PinGrid.jsx'
 
@@ -98,18 +96,11 @@ export default class App extends Component {
           loggedUser={this.state.loggedUser}
         />
         {this.state.showLoggedUserPins ? (
-          <span>
-            <Header as="h1">Your Pins</Header>
-            <Divider />
-            <PinGrid gridPins={loggedUserPins} loggedUser={this.state.loggedUser} />
-          </span>
+          <PinGrid gridPins={loggedUserPins} loggedUser={this.state.loggedUser} />
         ) : (
-          <span>
-            <Header as="h1">Recent Pins</Header>
-            <Divider />
-            <PinGrid gridPins={this.state.allPins} loggedUser={this.state.loggedUser} />
-          </span>
+          <PinGrid gridPins={this.state.allPins} loggedUser={this.state.loggedUser} />
         )}
+        <Footer />
       </div>
     )
   }

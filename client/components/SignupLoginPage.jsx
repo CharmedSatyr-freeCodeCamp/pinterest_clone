@@ -4,10 +4,8 @@
 //React
 import React, { Component } from 'react'
 
-//Semantic UI React
-import { Divider, Header } from 'semantic-ui-react'
-
 //App
+import Footer from './Footer.jsx'
 import LoginBar from './LoginBar.jsx'
 import PinGrid from './PinGrid.jsx'
 
@@ -31,9 +29,8 @@ export default class SignupLoginPage extends Component {
     return (
       <div>
         <LoginBar />
-        <Header as="h1">On Guard!</Header>
-        <Divider />
         <PinGrid gridPins={this.state.allPins} />
+        <Footer />
       </div>
     )
   }
