@@ -7,7 +7,9 @@ dotenv.load()
 
 /*** DEVELOPMENT TOOLS ***/
 const DEV = process.env.NODE_ENV === 'development'
-console.log('DEV?', DEV)
+if (DEV) {
+  console.log('Development mode')
+}
 
 /*** COMPONENTS ***/
 //React

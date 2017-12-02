@@ -19,7 +19,7 @@ const NavBar = ({ loggedUser, showAllPins, showLoggedUserPins }) => {
   return (
     <Menu fixed="top" inverted>
       <Container>
-        <Menu.Item as="a" header>
+        <Menu.Item header>
           {<Image size="mini" src={satyr} style={{ marginRight: '1.5em' }} />}
           Welcome, {loggedUser}
         </Menu.Item>
