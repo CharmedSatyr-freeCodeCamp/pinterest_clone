@@ -5,7 +5,7 @@
 import React, { Component } from 'react'
 
 //Semantic UI React
-import { Header, Icon, Image, Transition } from 'semantic-ui-react'
+import { Card, Icon, Image, Transition } from 'semantic-ui-react'
 
 /*** FUNCTIONS ***/
 //Common
@@ -62,61 +62,64 @@ export default class Pin extends Component {
   render() {
     let url = isURL(this.props.img)
     return (
-      <div>
+      <Card fluid raised>
         {/* Only show the Remove button to the pin's owner */}
-        <Header as="h3" textAlign="center">
-          {this.props.title}
-          {this.props.loggedUser === this.props.owner ? (
-            <Icon
-              link
-              fitted
-              name="remove"
-              color="red"
-              size="large"
-              onClick={() => {
-                this.deletePin()
-              }}
-              style={{
-                float: 'right',
-                marginLeft: -25,
-                marginRight: 0,
-                marginTop: 0,
-                marginBottom: 0,
-                padding: 0
-              }}
-            />
-          ) : null}
-        </Header>
-        <Image src={url ? this.props.img : dummy} onError={this.addDefaultSrc} />
 
-        {/* Like button */}
-        {this.props.loggedUserLike ? (
-          <Transition animation={'pulse'} duration={500} visible={this.state.full}>
-            <Icon
-              link
-              name="heart"
-              size="large"
-              color="red"
-              onClick={() => {
-                this.toggleLikePin()
-              }}
-            />
-          </Transition>
-        ) : (
-          <Transition animation={'pulse'} duration={500} visible={this.state.empty}>
-            <Icon
-              link
-              name="empty heart"
-              size="large"
-              onClick={() => {
-                this.toggleLikePin()
-              }}
-            />
-          </Transition>
-        )}
-        {this.props.likes.length}
-        <span style={{ float: 'right' }}>{this.props.owner}</span>
-      </div>
+        <Image src={url ? this.props.img : dummy} onError={this.addDefaultSrc} />
+        <Card.Content extra>
+          <Card.Header textAlign="center">
+            {this.props.title}
+            {this.props.loggedUser === this.props.owner ? (
+              <Icon
+                link
+                fitted
+                name="remove"
+                color="red"
+                size="large"
+                onClick={() => {
+                  this.deletePin()
+                }}
+                style={{
+                  float: 'right',
+                  marginLeft: -25,
+                  marginRight: 0,
+                  marginTop: 0,
+                  marginBottom: 0,
+                  padding: 0
+                }}
+              />
+            ) : null}
+          </Card.Header>
+
+          {/* Like button */}
+          {this.props.loggedUserLike ? (
+            <Transition animation={'pulse'} duration={500} visible={this.state.full}>
+              <Icon
+                link
+                name="heart"
+                size="large"
+                color="red"
+                onClick={() => {
+                  this.toggleLikePin()
+                }}
+              />
+            </Transition>
+          ) : (
+            <Transition animation={'pulse'} duration={500} visible={this.state.empty}>
+              <Icon
+                link
+                name="empty heart"
+                size="large"
+                onClick={() => {
+                  this.toggleLikePin()
+                }}
+              />
+            </Transition>
+          )}
+          {this.props.likes.length}
+          <span style={{ float: 'right' }}>{this.props.owner}</span>
+        </Card.Content>
+      </Card>
     )
   }
 }
