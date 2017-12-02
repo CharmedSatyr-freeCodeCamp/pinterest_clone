@@ -5,7 +5,10 @@
 import React, { Component } from 'react'
 
 //Semantic UI React
-import { Card, Icon, Image, Transition } from 'semantic-ui-react'
+import { Card, Icon, Image, Modal, Transition } from 'semantic-ui-react'
+
+//App
+import Like from './Like.jsx'
 
 /*** FUNCTIONS ***/
 //Common
@@ -22,12 +25,7 @@ import dummy from '../img/image.png'
 export default class Pin extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      /*empty and full are used for the Like/Unlike animation - directly  *
-       *checking this.props.loggedUserLike in <Transition/> doesn't work  */
-      empty: !this.props.loggedUserLike,
-      full: this.props.loggedUserLike
-    }
+    this.state = {}
     this.addDefaultSrc = this.addDefaultSrc.bind(this)
     this.deletePin = this.deletePin.bind(this)
     this.toggleLikePin = this.toggleLikePin.bind(this)
@@ -37,10 +35,11 @@ export default class Pin extends Component {
     e.target.src = dummy
   }
   deletePin() {
+    const { title, img, loggedUser } = this.props
     const obj = {
-      title: this.props.title,
-      img: this.props.img,
-      owner: this.props.loggedUser
+      title: title,
+      img: img,
+      owner: loggedUser
     }
     const data = encodeURIComponent(JSON.stringify(obj))
     f('DELETE', '/api/deletePin/' + data, response => {
@@ -48,11 +47,12 @@ export default class Pin extends Component {
     })
   }
   toggleLikePin() {
+    const { title, img, owner, loggedUser } = this.props
     const obj = {
-      title: this.props.title,
-      img: this.props.img,
-      owner: this.props.owner,
-      loggedUser: this.props.loggedUser
+      title: title,
+      img: img,
+      owner: owner,
+      loggedUser: loggedUser
     }
     const data = encodeURIComponent(JSON.stringify(obj))
     f('POST', 'api/toggleLikePin/' + data, response => {
@@ -60,15 +60,34 @@ export default class Pin extends Component {
     })
   }
   render() {
-    let url = isURL(this.props.img)
+    const { img, likes, logged, loggedUser, loggedUserLike, owner, title } = this.props
+    let url = isURL(img)
     return (
       <Card fluid raised>
         {/* Only show the Remove button to the pin's owner */}
-        <Image src={url ? this.props.img : dummy} onError={this.addDefaultSrc} />
+        <Modal trigger={<Image src={url ? img : dummy} onError={this.addDefaultSrc} />} closeIcon>
+          <Image alt={title} centered src={img} />
+          <Modal.Header>{title}</Modal.Header>
+          <Modal.Content image>
+            <Modal.Description>
+              {/* Like button */}
+              <Like
+                title={title}
+                img={img}
+                owner={owner}
+                likes={likes}
+                logged={logged}
+                loggedUser={loggedUser}
+                loggedUserLike={loggedUserLike}
+              />
+              <span style={{ float: 'right' }}>{owner}</span>
+            </Modal.Description>
+          </Modal.Content>
+        </Modal>
         <Card.Content extra>
           <Card.Header textAlign="center">
-            {this.props.title}
-            {this.props.loggedUser === this.props.owner ? (
+            {title}
+            {loggedUser === owner ? (
               <Icon
                 link
                 fitted
@@ -89,34 +108,17 @@ export default class Pin extends Component {
               />
             ) : null}
           </Card.Header>
-
           {/* Like button */}
-          {this.props.loggedUserLike ? (
-            <Transition animation={'pulse'} duration={500} visible={this.state.full}>
-              <Icon
-                link
-                name="heart"
-                size="large"
-                color="red"
-                onClick={() => {
-                  this.toggleLikePin()
-                }}
-              />
-            </Transition>
-          ) : (
-            <Transition animation={'pulse'} duration={500} visible={this.state.empty}>
-              <Icon
-                link
-                name="empty heart"
-                size="large"
-                onClick={() => {
-                  this.toggleLikePin()
-                }}
-              />
-            </Transition>
-          )}
-          {this.props.likes.length}
-          <span style={{ float: 'right' }}>{this.props.owner}</span>
+          <Like
+            title={title}
+            img={img}
+            owner={owner}
+            likes={likes}
+            logged={logged}
+            loggedUser={loggedUser}
+            loggedUserLike={loggedUserLike}
+          />
+          <span style={{ float: 'right' }}>{owner}</span>
         </Card.Content>
       </Card>
     )

@@ -5,13 +5,13 @@
 import React, { Component } from 'react'
 
 //Semantic UI React
-import { Grid } from 'semantic-ui-react'
+import { Grid, Icon, Image, Modal } from 'semantic-ui-react'
 
 //App
 import Pin from './Pin.jsx'
 
 /*** MAIN ***/
-const PinGrid = ({ gridPins, loggedUser }) => {
+const PinGrid = ({ gridPins, logged, loggedUser }) => {
   const show = gridPins.map((item, index) => {
     //Check to see if the loggedUser liked the Pin already
     const loggedUserLike = item.likes.indexOf(loggedUser) >= 0 ? true : false
@@ -23,6 +23,7 @@ const PinGrid = ({ gridPins, loggedUser }) => {
           img={item.img}
           owner={item.owner}
           likes={item.likes}
+          logged={logged}
           loggedUser={loggedUser}
           loggedUserLike={loggedUserLike}
         />

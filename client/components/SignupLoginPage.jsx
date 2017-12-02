@@ -16,7 +16,8 @@ export default class SignupLoginPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      allPins: []
+      allPins: [],
+      logged: false
     }
   }
   componentWillMount() {
@@ -29,7 +30,7 @@ export default class SignupLoginPage extends Component {
     return (
       <div>
         <LoginBar />
-        <PinGrid gridPins={this.state.allPins} />
+        <PinGrid logged={this.state.logged} gridPins={this.state.allPins} />
         <Footer />
       </div>
     )

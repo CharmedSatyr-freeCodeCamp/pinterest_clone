@@ -29,6 +29,7 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      logged: true,
       loggedUser: 'Client',
       allPins: [],
       showLoggedUserPins: false,
@@ -96,9 +97,17 @@ export default class App extends Component {
           loggedUser={this.state.loggedUser}
         />
         {this.state.showLoggedUserPins ? (
-          <PinGrid gridPins={loggedUserPins} loggedUser={this.state.loggedUser} />
+          <PinGrid
+            logged={this.state.logged}
+            gridPins={loggedUserPins}
+            loggedUser={this.state.loggedUser}
+          />
         ) : (
-          <PinGrid gridPins={this.state.allPins} loggedUser={this.state.loggedUser} />
+          <PinGrid
+            logged={this.state.logged}
+            gridPins={this.state.allPins}
+            loggedUser={this.state.loggedUser}
+          />
         )}
         <Footer />
       </div>
