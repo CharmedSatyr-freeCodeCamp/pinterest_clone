@@ -7,6 +7,7 @@ dotenv.load()
 
 /*** DEVELOPMENT TOOLS ***/
 const DEV = process.env.NODE_ENV === 'development'
+const PROD = process.env.NODE_ENV === 'production'
 
 /*** CONTROLLERS ***/
 import {
@@ -52,12 +53,30 @@ export const routes = (app, passport) => {
 
   //Root view
   app.route('/').get(permissions, (req, res) => {
-    res.sendFile(path + '/dist/index.html')
+    //Enforce HTTPS in production
+    if (PROD) {
+      if (req.headers['x-forwarded-proto'] !== 'https') {
+        res.redirect(process.env.APP_URL)
+      } else {
+        res.sendFile(path + '/dist/index.html')
+      }
+    } else {
+      res.sendFile(path + '/dist/index.html')
+    }
   })
 
   //Login view
   app.route('/login').get((req, res) => {
-    res.sendFile(path + '/dist/login.html')
+    //Enforce HTTPS in production
+    if (PROD) {
+      if (req.headers['x-forwarded-proto'] !== 'https') {
+        res.redirect(process.env.APP_URL + '/login')
+      } else {
+        res.sendFile(path + '/dist/login.html')
+      }
+    } else {
+      res.sendFile(path + '/dist/login.html')
+    }
   })
 
   //GitHub and Passport.js authentication - URL

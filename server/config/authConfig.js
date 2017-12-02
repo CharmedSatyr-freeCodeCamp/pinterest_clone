@@ -20,7 +20,7 @@ export const authConfig = passport => {
       {
         consumerKey: process.env.TWITTER_CONSUMER_KEY,
         consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-        callbackURL: process.env.APP_URL + 'auth/twitter/callback/'
+        callbackURL: process.env.APP_URL + '/auth/twitter/callback/'
       },
       (token, tokenSecret, profile, cb) => {
         process.nextTick(() => {
@@ -60,7 +60,7 @@ export const authConfig = passport => {
       {
         clientID: process.env.GITHUB_KEY,
         clientSecret: process.env.GITHUB_SECRET,
-        callbackURL: process.env.APP_URL + 'auth/github/callback/'
+        callbackURL: process.env.APP_URL + '/auth/github/callback/'
       },
       (token, refreshToken, profile, done) => {
         process.nextTick(() => {
