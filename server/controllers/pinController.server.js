@@ -39,8 +39,10 @@ export const toggleLikePin = (req, res) => {
             console.log('This pin has been unliked!')
           }
         } else {
-          //Otherwise add it
-          doc.likes.push(user)
+          //Otherwise add it - but don't add a null value as a like
+          if (user !== null) {
+            doc.likes.push(user)
+          }
           if (DEV) {
             console.log('This pin has been liked!')
           }
