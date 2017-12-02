@@ -9,7 +9,7 @@ import { Container, Image, Icon, Menu } from 'semantic-ui-react'
 
 /*** RESOURCES ***/
 //Satyr
-import satyr from '../img/favicon.ico'
+import glowsatyr from '../img/Glowing-Black-Satyr.png'
 
 /*** MAIN ***/
 const LoginBar = () => {
@@ -17,7 +17,7 @@ const LoginBar = () => {
     <Menu fixed="top" inverted>
       <Container>
         <Menu.Item header>
-          {<Image size="mini" src={satyr} style={{ marginRight: '1.5em' }} />}
+          {<Image size="mini" src={glowsatyr} style={{ marginRight: '1.5em' }} />}
           Welcome to Sorcerer City, a fantasy-themed Pinterest clone built for freeCodeCamp
         </Menu.Item>
         <Menu.Item as="a" href="/auth/github" position="right">
