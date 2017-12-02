@@ -8,7 +8,7 @@ import React, { Component } from 'react'
 import { Container, Image, Menu } from 'semantic-ui-react'
 
 //App
-import NewPinBtn from './NewPinBtn.jsx'
+import NewPin from './NewPin.jsx'
 
 /*** RESOURCES ***/
 //Satyr
@@ -24,7 +24,7 @@ const NavBar = ({ loggedUser, showAllPins, showLoggedUserPins }) => {
           Welcome, {loggedUser}
         </Menu.Item>
         <Menu.Item>
-          <NewPinBtn owner={loggedUser} />
+          <NewPin owner={loggedUser} />
         </Menu.Item>
         <Menu.Item as="a" onClick={showLoggedUserPins}>
           Your Pins

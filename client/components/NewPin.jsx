@@ -5,7 +5,7 @@
 import React, { Component } from 'react'
 
 //Semantic UI React
-import { Button, Header, Image, Input } from 'semantic-ui-react'
+import { Button, Header, Image, Input, Modal } from 'semantic-ui-react'
 
 /*** Image ***/
 //Dummy Image
@@ -23,13 +23,30 @@ export default class NewPin extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      modalOpen: false,
       title: 'Add a Title!',
       image: dummy,
       owner: this.props.owner
     }
+    this.handleClose = this.handleClose.bind(this)
+    this.handleOpen = this.handleOpen.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleTitle = this.handleTitle.bind(this)
     this.handleImg = this.handleImg.bind(this)
+  }
+  handleClose() {
+    this.setState({ modalOpen: false })
+  }
+  handleImg() {
+    const image = document.getElementById('pinImg').value
+    if (isURL(image)) {
+      this.setState({
+        image: image
+      })
+    }
+  }
+  handleOpen() {
+    this.setState({ modalOpen: true })
   }
   handleSubmit() {
     const obj = {
@@ -40,15 +57,8 @@ export default class NewPin extends Component {
     const data = encodeURIComponent(JSON.stringify(obj))
     f('POST', '/api/savePin/' + data, response => {
       //console.log(response)
+      this.handleClose()
     })
-  }
-  handleImg() {
-    const image = document.getElementById('pinImg').value
-    if (isURL(image)) {
-      this.setState({
-        image: image
-      })
-    }
   }
   handleTitle() {
     const title = document.getElementById('pinTitle').value
@@ -58,28 +68,51 @@ export default class NewPin extends Component {
   }
   render() {
     return (
-      <div className="newpin">
-        <Header as="h1" textAlign="center">
-          {this.state.title}
-        </Header>
-        <Image src={this.state.image} />
-        <br />
-        <Input id="pinTitle" placeholder="Title" onChange={this.handleTitle} />
-        <br />
-        <Input
-          id="pinImg"
-          placeholder="https://www.website.com/photo.jpg"
-          onChange={this.handleImg}
-        />
-        <br />
-        <Button
-          onClick={() => {
-            this.handleSubmit()
-          }}
-        >
-          Submit
-        </Button>
-      </div>
+      <Modal
+        closeIcon
+        onClose={() => {
+          this.handleClose()
+        }}
+        open={this.state.modalOpen}
+        size="mini"
+        trigger={
+          <Button
+            color="blue"
+            content="New Pin"
+            onClick={() => {
+              this.handleOpen()
+            }}
+            icon="plus"
+          />
+        }
+      >
+        <Modal.Header>New Pin</Modal.Header>
+        <Modal.Content>
+          <div className="newpin">
+            <Header as="h1" textAlign="center">
+              {this.state.title}
+            </Header>
+            <Image src={this.state.image} />
+            <br />
+            <Input id="pinTitle" placeholder="Title" onChange={this.handleTitle} />
+            <br />
+            <Input
+              id="pinImg"
+              placeholder="https://www.website.com/photo.jpg"
+              onChange={this.handleImg}
+            />
+            <br />
+            <Button
+              color="blue"
+              onClick={() => {
+                this.handleSubmit()
+              }}
+            >
+              Submit
+            </Button>
+          </div>
+        </Modal.Content>
+      </Modal>
     )
   }
 }
