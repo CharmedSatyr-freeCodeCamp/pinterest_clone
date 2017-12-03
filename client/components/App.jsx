@@ -81,33 +81,22 @@ export default class App extends Component {
     this.loggedUser()
   }
   render() {
+    const { allPins, logged, loggedUser, showLoggedUserPins } = this.state
     //Filter allPins for those made by the loggedUser
-    const loggedUserPins = this.state.allPins.filter(item => {
-      return item.owner === this.state.loggedUser
+    const loggedUserPins = allPins.filter(item => {
+      return item.owner === loggedUser
     })
     return (
       <div>
         <NavBar
-          showAllPins={() => {
-            this.showAllPins()
-          }}
-          showLoggedUserPins={() => {
-            this.showLoggedUserPins()
-          }}
-          loggedUser={this.state.loggedUser}
+          showAllPins={this.showAllPins}
+          showLoggedUserPins={this.showLoggedUserPins}
+          loggedUser={loggedUser}
         />
-        {this.state.showLoggedUserPins ? (
-          <PinGrid
-            logged={this.state.logged}
-            gridPins={loggedUserPins}
-            loggedUser={this.state.loggedUser}
-          />
+        {showLoggedUserPins ? (
+          <PinGrid logged={logged} gridPins={loggedUserPins} loggedUser={loggedUser} />
         ) : (
-          <PinGrid
-            logged={this.state.logged}
-            gridPins={this.state.allPins}
-            loggedUser={this.state.loggedUser}
-          />
+          <PinGrid logged={logged} gridPins={allPins} loggedUser={loggedUser} />
         )}
         <Footer />
       </div>

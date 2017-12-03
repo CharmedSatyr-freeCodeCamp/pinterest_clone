@@ -26,11 +26,18 @@ export default class SignupLoginPage extends Component {
       this.setState({ allPins: response })
     })
   }
+  showAllPins() {
+    this.setState({ showAllPins: true, showLogin: false })
+  }
+  showLogin() {
+    this.setState({ showAllPins: false, showLogin: true })
+  }
   render() {
+    const { logged, allPins } = this.state
     return (
       <div>
         <LoginBar />
-        <PinGrid logged={this.state.logged} gridPins={this.state.allPins} />
+        <PinGrid logged={logged} gridPins={allPins} />
         <Footer />
       </div>
     )

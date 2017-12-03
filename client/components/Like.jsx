@@ -15,11 +15,12 @@ import { f } from '../../common/common.functions.js'
 export default class Like extends Component {
   constructor(props) {
     super(props)
+    const { loggedUserLike } = this.props
     this.state = {
       /*empty and full are used for the Like/Unlike animation - directly  *
        *checking this.props.loggedUserLike in <Transition/> doesn't work  */
-      empty: !this.props.loggedUserLike,
-      full: this.props.loggedUserLike
+      empty: !loggedUserLike,
+      full: loggedUserLike
     }
   }
   toggleLikePin() {
