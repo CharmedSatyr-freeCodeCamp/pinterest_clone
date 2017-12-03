@@ -37,9 +37,9 @@ export default class Pin extends Component {
   deletePin() {
     const { title, img, loggedUser } = this.props
     const obj = {
-      title: title,
       img: img,
-      owner: loggedUser
+      owner: loggedUser,
+      title: title
     }
     const data = encodeURIComponent(JSON.stringify(obj))
     f('DELETE', '/api/deletePin/' + data, response => {
@@ -47,12 +47,12 @@ export default class Pin extends Component {
     })
   }
   toggleLikePin() {
-    const { title, img, owner, loggedUser } = this.props
+    const { img, loggedUser, owner, title } = this.props
     const obj = {
-      title: title,
       img: img,
+      loggedUser: loggedUser,
       owner: owner,
-      loggedUser: loggedUser
+      title: title
     }
     const data = encodeURIComponent(JSON.stringify(obj))
     f('POST', 'api/toggleLikePin/' + data, response => {
@@ -66,22 +66,23 @@ export default class Pin extends Component {
       <Card fluid raised>
         {/* Only show the Remove button to the pin's owner */}
         <Modal
-          trigger={<Image alt={title} onError={this.addDefaultSrc} src={url ? img : dummy} />}
           closeIcon
+          size="small"
+          trigger={<Image alt={title} onError={this.addDefaultSrc} src={url ? img : dummy} />}
         >
-          <Image centered alt={title} onError={this.addDefaultSrc} src={url ? img : dummy} />
+          <Image alt={title} centered onError={this.addDefaultSrc} src={url ? img : dummy} />
           <Modal.Header>{title}</Modal.Header>
           <Modal.Content image>
             <Modal.Description>
               {/* Like button */}
               <Like
-                title={title}
                 img={img}
-                owner={owner}
                 likes={likes}
                 logged={logged}
                 loggedUser={loggedUser}
                 loggedUserLike={loggedUserLike}
+                owner={owner}
+                title={title}
               />
               <span style={{ float: 'right' }}>{owner}</span>
             </Modal.Description>
@@ -113,13 +114,13 @@ export default class Pin extends Component {
           </Card.Header>
           {/* Like button */}
           <Like
-            title={title}
             img={img}
-            owner={owner}
             likes={likes}
             logged={logged}
             loggedUser={loggedUser}
             loggedUserLike={loggedUserLike}
+            owner={owner}
+            title={title}
           />
           <span style={{ float: 'right' }}>{owner}</span>
         </Card.Content>
