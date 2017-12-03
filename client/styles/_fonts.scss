@@ -1,0 +1,27 @@
+//FONTS
+//@import url('https://fonts.googleapis.com/css?family=Macondo');
+// @import url('https://fonts.googleapis.com/css?family=Spectral');
+// @import url('https://fonts.googleapis.com/css?family=Vollkorn');
+
+* {
+//    font-family: 'Macondo', cursive !important;
+//    font-family: 'Spectral', serif !important;
+//    font-family: 'Vollkorn', serif !important;
+}
+
+@font-face {
+  font-family: 'Macondo';
+  src: url('../fonts/Macondo/Macondo-Regular.eot');
+  src: url('../fonts/Macondo/Macondo-Regular.eot?#iefix')
+      format('embedded-opentype'),
+    url('../fonts/Macondo/Macondo-Regular.woff2')
+      format('woff2'),
+    url('../fonts/Macondo/Macondo-Regular.woff')
+      format('woff'),
+    url('../fonts/Macondo/Macondo-Regular.ttf')
+      format('truetype'),
+    url('../fonts/Macondo/Macondo-Regular.svg#Macondo-Regular')
+      format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

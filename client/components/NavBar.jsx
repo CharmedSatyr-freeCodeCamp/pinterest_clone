@@ -37,15 +37,8 @@ export default class NavBar extends Component {
     return (
       <Menu fixed="top" inverted pointing>
         <Container>
-          <Menu.Item header>
-            {
-              <Image
-                alt="Glowing Black Satyr"
-                size="mini"
-                src={glowsatyr}
-                style={{ marginRight: '1.5em' }}
-              />
-            }
+          <Menu.Item header style={{ fontSize: '120%' }} className="fantasyFont">
+            <Image alt="Glowing Black Satyr" src={glowsatyr} className="navSatyr" />
             Welcome, {loggedUser}
           </Menu.Item>
           <Menu.Item>

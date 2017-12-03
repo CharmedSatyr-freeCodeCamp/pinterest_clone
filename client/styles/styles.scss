@@ -1,6 +1,8 @@
+@import '_fonts.scss';
+
 body {
+  background: #e8eeff url('../img/starring.png');
   margin: 50px 20px 75px;
-  background: #e8eeff url('../img/pw_maze_white.png') no-repeat fixed center;
   overflow-x: hidden;
 }
 
@@ -8,4 +10,13 @@ body {
   display: flex;
   flex-direction: column;
   padding: 10px;
+}
+
+.fantasyFont {
+  font-family: 'Macondo', fantasy !important;
+}
+
+.navSatyr {
+  height: 50px;
+  margin: -10px 1.25em 0 auto;
 }

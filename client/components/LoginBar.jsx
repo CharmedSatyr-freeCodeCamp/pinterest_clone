@@ -17,13 +17,8 @@ const LoginBar = () => {
   return (
     <Menu fixed="top" inverted>
       <Container>
-        <Menu.Item header>
-          <Image
-            alt="Glowing Black Satyr"
-            size="mini"
-            src={glowsatyr}
-            style={{ marginRight: '1.5em' }}
-          />
+        <Menu.Item header style={{ fontSize: '120%' }} className="fantasyFont">
+          <Image alt="Glowing Black Satyr" src={glowsatyr} className="navSatyr" />
           Welcome to Sorcerer City, a fantasy-themed Pinterest clone built for freeCodeCamp
         </Menu.Item>
         <Modal
@@ -34,15 +29,11 @@ const LoginBar = () => {
             </Menu.Item>
           }
         >
-          <Image
-            alt="Satyr logo"
-            centered
-            height="75px"
-            src={satyr}
-            style={{ marginTop: 12, marginBottom: -8 }}
-          />
+          <Image alt="Satyr logo" centered height="75px" src={satyr} style={{ marginTop: 12 }} />
           <Modal.Header>
-            <Header textAlign="center">Welcome to Sorcerer City</Header>
+            <Header textAlign="center" className="fantasyFont">
+              Welcome to Sorcerer City
+            </Header>
           </Modal.Header>
           <Modal.Content>
             <Modal.Description>
