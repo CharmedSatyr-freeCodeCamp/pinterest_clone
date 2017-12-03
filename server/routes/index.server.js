@@ -20,7 +20,8 @@ import {
 
 /*** ROUTES ***/
 export const routes = (app, passport) => {
-  let name_view //This is the name that will display in the client view
+  //This is the name that will display in the client view
+  let name_view
 
   //Authorization check
   const permissions = (req, res, next) => {
