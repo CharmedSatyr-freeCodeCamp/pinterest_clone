@@ -64,13 +64,18 @@ export default class Pin extends Component {
     let url = isURL(img)
     return (
       <Card fluid raised>
-        {/* Only show the Remove button to the pin's owner */}
         <Modal
           closeIcon
           size="small"
           trigger={<Image alt={title} onError={this.addDefaultSrc} src={url ? img : dummy} />}
         >
-          <Image alt={title} centered onError={this.addDefaultSrc} src={url ? img : dummy} />
+          <Image
+            alt={title}
+            centered
+            onError={this.addDefaultSrc}
+            src={url ? img : dummy}
+            style={{ width: '100%' }}
+          />
           <Modal.Header>{title}</Modal.Header>
           <Modal.Content image>
             <Modal.Description>
@@ -91,6 +96,7 @@ export default class Pin extends Component {
         <Card.Content extra>
           <Card.Header textAlign="center">
             {title}
+            {/* Only show the Remove button to the pin's owner */}
             {loggedUser === owner ? (
               <Icon
                 link
