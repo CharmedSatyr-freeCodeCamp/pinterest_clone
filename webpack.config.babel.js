@@ -62,9 +62,11 @@ const client = {
             {
               loader: 'css-loader',
               options: {
+                //importLoaders: 1,
                 minimize: PROD ? true : false
               }
             }
+            //'postcss-loader'
           ]
         })
       },
