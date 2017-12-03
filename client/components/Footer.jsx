@@ -13,8 +13,7 @@ const Footer = () => {
     <Menu fixed="bottom" inverted>
       <Container>
         <Menu.Item as="a" href="https://github.com/CharmedSatyr/pinterest_clone/" target="_blank">
-          Designed and built by CharmedSatyr
-          <Icon name="github" />
+          Designed and built by &nbsp;<Icon fitted name="github" /> CharmedSatyr
         </Menu.Item>
         <Menu.Item
           as="a"
