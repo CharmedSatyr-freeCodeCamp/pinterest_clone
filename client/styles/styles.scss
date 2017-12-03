@@ -1,6 +1,7 @@
 body {
-  margin: 50px 20px;
-  background: #e8eeff url('../img/pw_maze_white.png');
+  margin: 50px 20px 75px;
+  background: #e8eeff url('../img/pw_maze_white.png') no-repeat fixed center;
+  overflow-x: hidden;
 }
 
 .newpin {
