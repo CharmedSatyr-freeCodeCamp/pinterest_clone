@@ -12,8 +12,10 @@ const PROD = process.env.NODE_ENV === 'production'
 /*** CONTROLLERS ***/
 import {
   allPins,
-  savePin,
   deletePin,
+  login,
+  root,
+  savePin,
   toggleLikePin,
   unpinAll
 } from '../controllers/pinController.server.js'
@@ -52,33 +54,15 @@ export const routes = (app, passport) => {
   })
   */
 
-  //Root view
-  app.route('/').get(permissions, (req, res) => {
-    //Enforce HTTPS in production
-    if (PROD) {
-      if (req.headers['x-forwarded-proto'] !== 'https') {
-        res.redirect(process.env.APP_URL)
-      } else {
-        res.sendFile(path + '/dist/index.html')
-      }
-    } else {
-      res.sendFile(path + '/dist/index.html')
-    }
-  })
+  //Root view - developers don't have to log in to see the App
+  if (PROD) {
+    app.route('/').get(permissions, root)
+  } else if (DEV) {
+    app.route('/').get(root)
+  }
 
   //Login view
-  app.route('/login').get((req, res) => {
-    //Enforce HTTPS in production
-    if (PROD) {
-      if (req.headers['x-forwarded-proto'] !== 'https') {
-        res.redirect(process.env.APP_URL + '/login')
-      } else {
-        res.sendFile(path + '/dist/login.html')
-      }
-    } else {
-      res.sendFile(path + '/dist/login.html')
-    }
-  })
+  app.route('/login').get(login)
 
   //GitHub and Passport.js authentication - URL
   app.route('/auth/github').get(passport.authenticate('github'))

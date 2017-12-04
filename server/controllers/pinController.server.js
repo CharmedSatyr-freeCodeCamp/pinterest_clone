@@ -7,11 +7,41 @@ dotenv.load()
 
 /*** DEVELOPMENT TOOLS ***/
 const DEV = process.env.NODE_ENV === 'development'
+const PROD = process.env.NODE_ENV === 'production'
 
 /*** MODEL ***/
 import Pin from '../models/Pin.js'
 
 /*** FUNCTIONS ***/
+
+//Root view
+export const root = (req, res) => {
+  //Enforce HTTPS in production
+  if (PROD) {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+      res.redirect(process.env.APP_URL)
+    } else {
+      res.sendFile(path + '/dist/index.html')
+    }
+  } else {
+    res.sendFile(path + '/dist/index.html')
+  }
+}
+
+//Login view
+export const login = (req, res) => {
+  //Enforce HTTPS in production
+  if (PROD) {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+      res.redirect(process.env.APP_URL + '/login')
+    } else {
+      res.sendFile(path + '/dist/login.html')
+    }
+  } else {
+    res.sendFile(path + '/dist/login.html')
+  }
+}
+
 //Toggle Like Pin
 export const toggleLikePin = (req, res) => {
   const obj = JSON.parse(decodeURIComponent(req.params.data))
