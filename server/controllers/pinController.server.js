@@ -58,14 +58,17 @@ export const toggleLikePin = (req, res) => {
 
 //Get all pins
 export const allPins = (req, res) => {
-  Pin.find({}, (err, doc) => {
-    if (err) {
-      console.error(err)
-    }
-    if (doc) {
-      res.json(doc)
-    }
-  })
+  Pin.find({})
+    //Show most recent first
+    .sort({ created: 'descending' })
+    .exec((err, doc) => {
+      if (err) {
+        console.error(err)
+      }
+      if (doc) {
+        res.json(doc)
+      }
+    })
 }
 
 //Delete all pins

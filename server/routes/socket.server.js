@@ -23,14 +23,19 @@ const ioEvents = io => {
     //Callback 2
     serverSocket.on('start', received => {
       setInterval(() => {
-        Pin.find({}, (err, doc) => {
-          if (err) {
-            console.error(err)
-          }
-          if (doc) {
-            serverSocket.emit('updateAllPins', doc)
-          }
-        })
+        Pin.find({})
+          //Show most recent first
+          .sort({ created: 'descending' })
+          .exec((err, doc) => {
+            if (err) {
+              console.log(err)
+              console.error(err)
+            }
+            if (doc) {
+              console.log(doc)
+              serverSocket.emit('updateAllPins', doc)
+            }
+          })
       }, received)
     })
 
