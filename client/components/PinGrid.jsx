@@ -19,13 +19,13 @@ const PinGrid = ({ gridPins, logged, loggedUser }) => {
     return (
       <Grid.Column key={index}>
         <Pin
-          title={item.title}
           img={item.img}
-          owner={item.owner}
           likes={item.likes}
           logged={logged}
           loggedUser={loggedUser}
           loggedUserLike={loggedUserLike}
+          owner={item.owner}
+          title={item.title}
         />
       </Grid.Column>
     )
