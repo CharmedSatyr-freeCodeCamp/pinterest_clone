@@ -1,5 +1,6 @@
 'use strict'
 
+//All Purpose Asynchronous Fetcher - takes one or two callbacks
 export const f = async (method, url, cb1, cb2) => {
   try {
     const a = await fetch(url, { method: method })
@@ -14,4 +15,5 @@ export const f = async (method, url, cb1, cb2) => {
   }
 }
 
-const uniq = a => Array.from(new Set(a)) //Deduplicate
+//Deduplicate
+export const uniq = a => Array.from(new Set(a))
