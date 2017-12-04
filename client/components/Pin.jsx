@@ -5,7 +5,7 @@
 import React, { Component } from 'react'
 
 //Semantic UI React
-import { Button, Card, Image, Modal, Transition } from 'semantic-ui-react'
+import { Button, Card, Image, Modal } from 'semantic-ui-react'
 
 //App
 import Like from './Like.jsx'
@@ -63,7 +63,7 @@ export default class Pin extends Component {
     const { img, likes, logged, loggedUser, loggedUserLike, owner, title } = this.props
     let url = isURL(img)
     return (
-      <Card fluid raised>
+      <Card raised style={{ margin: 5 }}>
         <Modal
           closeIcon
           size="small"
