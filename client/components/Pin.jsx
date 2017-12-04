@@ -81,7 +81,6 @@ export default class Pin extends Component {
             {/* Only show the Remove button to the pin's owner */}
             {loggedUser === owner ? (
               <Button
-                closeOnDocumentClick="true"
                 floated="right"
                 onClick={() => {
                   this.deletePin()
