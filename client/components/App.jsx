@@ -51,10 +51,10 @@ export default class App extends Component {
     }
     //Keeps allPins up to date for all users without browser refresh
     const cb2 = response => {
-      if (response.length !== this.state.allPins.length) {
-        /* Checking for relative lengths is intended as a performance     *
-         * enchancement.For some reason (response !== this.state.allPins) *
-         * almost always returns true, but the the lengths vary.          */
+      if (response !== this.state.allPins) {
+        /* Checking for differences is intended as a performance          *
+         * enchancement.For some reason, (response !== this.state.allPins)*
+         * almost always returns true, though.                            */
         if (DEV) {
           console.log('Updating allPins state...')
         }
