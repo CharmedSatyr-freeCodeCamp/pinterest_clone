@@ -125,5 +125,7 @@ export const routes = (app, passport) => {
 
   /*** DEBUGGING - No UI ***/
   //Delete all pins
-  app.use('/api/unpinAll', unpinAll)
+  if (DEV) {
+    app.use('/api/unpinAll', unpinAll)
+  }
 }
