@@ -5,7 +5,7 @@
 import React, { Component } from 'react'
 
 //Semantic UI React
-import { Card, Icon, Image, Modal, Transition } from 'semantic-ui-react'
+import { Button, Card, Image, Modal, Transition } from 'semantic-ui-react'
 
 //App
 import Like from './Like.jsx'
@@ -76,7 +76,23 @@ export default class Pin extends Component {
             src={url ? img : dummy}
             style={{ width: '100%' }}
           />
-          <Modal.Header>{title}</Modal.Header>
+          <Modal.Header>
+            {title}
+            {/* Only show the Remove button to the pin's owner */}
+            {loggedUser === owner ? (
+              <Button
+                closeOnDocumentClick="true"
+                floated="right"
+                onClick={() => {
+                  this.deletePin()
+                }}
+                negative
+                style={{ marginTop: -5 }}
+              >
+                Delete Pin
+              </Button>
+            ) : null}
+          </Modal.Header>
           <Modal.Content image>
             <Modal.Description>
               {/* Like button */}
@@ -94,30 +110,7 @@ export default class Pin extends Component {
           </Modal.Content>
         </Modal>
         <Card.Content extra>
-          <Card.Header textAlign="center">
-            {title}
-            {/* Only show the Remove button to the pin's owner */}
-            {loggedUser === owner ? (
-              <Icon
-                link
-                fitted
-                name="remove"
-                color="red"
-                size="large"
-                onClick={() => {
-                  this.deletePin()
-                }}
-                style={{
-                  float: 'right',
-                  marginLeft: -25,
-                  marginRight: 0,
-                  marginTop: 0,
-                  marginBottom: 0,
-                  padding: 0
-                }}
-              />
-            ) : null}
-          </Card.Header>
+          <Card.Header textAlign="center">{title}</Card.Header>
           {/* Like button */}
           <Like
             img={img}
