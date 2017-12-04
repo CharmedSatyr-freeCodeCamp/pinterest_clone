@@ -7,7 +7,7 @@ import React, { Component } from 'react'
 //App
 import Footer from './Footer.jsx'
 import LoginBar from './LoginBar.jsx'
-import PinGrid from './PinGrid.jsx'
+import PinWall from './PinWall.jsx'
 
 /*** FUNCTIONS ***/
 import { f } from '../../common/common.functions.js'
@@ -37,7 +37,7 @@ export default class SignupLoginPage extends Component {
     return (
       <div>
         <LoginBar />
-        <PinGrid logged={logged} gridPins={allPins} />
+        <PinWall logged={logged} wallPins={allPins} />
         <Footer />
       </div>
     )

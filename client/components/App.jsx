@@ -18,7 +18,7 @@ import React, { Component } from 'react'
 //App
 import Footer from './Footer.jsx'
 import NavBar from './NavBar.jsx'
-import PinGrid from './PinGrid.jsx'
+import PinWall from './PinWall.jsx'
 
 /*** FUNCTIONS ***/
 import { f } from '../../common/common.functions.js'
@@ -51,7 +51,13 @@ export default class App extends Component {
     }
     //Keeps allPins up to date for all users without browser refresh
     const cb2 = response => {
-      if (response !== this.state.allPins) {
+      if (response.length !== this.state.allPins.length) {
+        /* Checking for relative lengths is intended as a performance     *
+         * enchancement.For some reason (response !== this.state.allPins) *
+         * almost always returns true, but the the lengths vary.          */
+        if (DEV) {
+          console.log('Updating allPins state...')
+        }
         this.setState({ allPins: response })
       }
     }
@@ -94,9 +100,9 @@ export default class App extends Component {
           loggedUser={loggedUser}
         />
         {showLoggedUserPins ? (
-          <PinGrid logged={logged} gridPins={loggedUserPins} loggedUser={loggedUser} />
+          <PinWall logged={logged} wallPins={loggedUserPins} loggedUser={loggedUser} />
         ) : (
-          <PinGrid logged={logged} gridPins={allPins} loggedUser={loggedUser} />
+          <PinWall logged={logged} wallPins={allPins} loggedUser={loggedUser} />
         )}
         <Footer />
       </div>
