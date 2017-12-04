@@ -46,6 +46,7 @@
       "passport-twitter": "^1.0.4",
       "react": "15",
       "react-dom": "15",
+      "react-masonry-component": "^6.0.1",
       "semantic-ui-react": "^0.74.2",
       "socket.io": "^2.0.3",
       "socket.io-client": "^2.0.3",
