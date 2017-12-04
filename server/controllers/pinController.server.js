@@ -71,6 +71,21 @@ export const allPins = (req, res) => {
     })
 }
 
+//updateAllPins - web socket controller
+export const updateAllPins = (socket, message) => {
+  Pin.find({})
+    //Show most recent first
+    .sort({ created: 'descending' })
+    .exec((err, doc) => {
+      if (err) {
+        console.error(err)
+      }
+      if (doc) {
+        socket.emit(message, doc)
+      }
+    })
+}
+
 //Delete all pins
 export const unpinAll = (req, res) => {
   Pin.remove({}, (err, doc) => {

@@ -8,8 +8,8 @@ dotenv.load()
 /*** DEVELOPMENT TOOLS ***/
 const DEV = process.env.NODE_ENV === 'development'
 
-/*** MODEL ***/
-import Pin from '../models/Pin.js'
+/*** CONTROLLER ***/
+import { updateAllPins } from '../controllers/pinController.server.js'
 
 /*** Web Socket Events ***/
 const ioEvents = io => {
@@ -23,19 +23,7 @@ const ioEvents = io => {
     //Callback 2
     serverSocket.on('start', received => {
       setInterval(() => {
-        Pin.find({})
-          //Show most recent first
-          .sort({ created: 'descending' })
-          .exec((err, doc) => {
-            if (err) {
-              console.log(err)
-              console.error(err)
-            }
-            if (doc) {
-              console.log(doc)
-              serverSocket.emit('updateAllPins', doc)
-            }
-          })
+        updateAllPins(serverSocket, 'updateAllPins')
       }, received)
     })
 
