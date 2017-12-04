@@ -24,18 +24,27 @@ export default class Like extends Component {
     }
   }
   toggleLikePin() {
+    const { img, logged, loggedUser, owner, title } = this.props
     //Only logged users can Like a post
-    if (this.props.logged) {
+    if (logged) {
       const obj = {
-        title: this.props.title,
-        img: this.props.img,
-        owner: this.props.owner,
-        loggedUser: this.props.loggedUser
+        img: img,
+        loggedUser: loggedUser,
+        owner: owner,
+        title: title
       }
       const data = encodeURIComponent(JSON.stringify(obj))
       f('POST', 'api/toggleLikePin/' + data, response => {
         //console.log(response)
       })
+    }
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    //Only update when loggedUserLike updates
+    if (this.props.loggedUserLike !== nextProps.loggedUserLike) {
+      return true
+    } else {
+      return false
     }
   }
   render() {
