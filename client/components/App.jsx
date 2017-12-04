@@ -43,7 +43,7 @@ export default class App extends Component {
     if (DEV) {
       console.log('Calling start function; user:', user)
     }
-    //Indicates Web Socket connection - VERBOSE!
+    //Indicates Web Socket connection
     const cb1 = response => {
       if (DEV) {
         console.log(response)
