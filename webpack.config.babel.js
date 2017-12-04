@@ -65,8 +65,8 @@ const client = {
                 //importLoaders: 1,
                 minimize: PROD ? true : false
               }
-            }
-            //'postcss-loader'
+            },
+            'postcss-loader'
           ]
         })
       },
@@ -83,6 +83,7 @@ const client = {
                 minimize: PROD ? true : false
               }
             },
+            'postcss-loader',
             {
               loader: 'sass-loader',
               options: {
