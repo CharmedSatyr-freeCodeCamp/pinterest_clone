@@ -7,6 +7,9 @@ import React, { Component } from 'react'
 //Masonry
 import Masonry from 'react-masonry-component'
 
+//Semantic UI React
+import { Container } from 'semantic-ui-react'
+
 //App
 import Pin from './Pin.jsx'
 
@@ -33,9 +36,20 @@ const PinWall = ({ wallPins, logged, loggedUser }) => {
     )
   })
   return (
-    <Masonry style={{ marginTop: 80 }} options={masonryOptions}>
-      {show}
-    </Masonry>
+    <Container
+      style={{
+        width: '74vw'
+      }}
+    >
+      <Masonry
+        style={{
+          marginTop: 80
+        }}
+        options={masonryOptions}
+      >
+        {show}
+      </Masonry>
+    </Container>
   )
 }
 
