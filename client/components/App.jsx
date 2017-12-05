@@ -56,7 +56,7 @@ export default class App extends Component {
          * enchancement.For some reason, (response !== this.state.allPins)*
          * almost always returns true, though.                            */
         if (DEV) {
-          console.log('Updating allPins state...')
+          //console.log('Updating allPins state...')
         }
         this.setState({ allPins: response })
       }
@@ -85,7 +85,7 @@ export default class App extends Component {
     const { logged, loggedUser, allPins, showLoggedUserPins, showAllPins } = this.state
     if (allPins !== nextState.allPins) {
       if (DEV) {
-        console.log('allPins and nextState.allPins are different again!')
+        //console.log('allPins and nextState.allPins are different again!')
       }
       return true
     } else if (
