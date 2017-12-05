@@ -47,11 +47,19 @@ export default class NavBar extends Component {
           <Menu.Item
             active={activeItem === 'showLoggedUserPins'}
             as="a"
-            onClick={this.handleLoggedUserPinsClick}
+            onClick={() => {
+              this.handleLoggedUserPinsClick()
+            }}
           >
             Your Cards
           </Menu.Item>
-          <Menu.Item active={activeItem === 'showAllPins'} as="a" onClick={this.handleAllPinsClick}>
+          <Menu.Item
+            active={activeItem === 'showAllPins'}
+            as="a"
+            onClick={() => {
+              this.handleAllPinsClick()
+            }}
+          >
             Recent Cards
           </Menu.Item>
           <Menu.Item as="a" href="/logout" position="right">

@@ -81,7 +81,9 @@ export default class Pin extends Component {
           trigger={
             <Image
               alt={title}
-              onClick={this.handleOpen}
+              onClick={() => {
+                this.handleOpen()
+              }}
               onError={this.addDefaultSrc}
               src={url ? img : dummy}
             />
@@ -98,7 +100,14 @@ export default class Pin extends Component {
             {title}
             {/* Only show the Remove button to the pin's owner */}
             {loggedUser === owner ? (
-              <Button floated="right" onClick={this.deletePin} negative style={{ marginTop: -5 }}>
+              <Button
+                floated="right"
+                onClick={() => {
+                  this.deletePin()
+                }}
+                negative
+                style={{ marginTop: -5 }}
+              >
                 Delete Card
               </Button>
             ) : null}

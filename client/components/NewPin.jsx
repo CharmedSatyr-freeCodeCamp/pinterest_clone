@@ -81,7 +81,16 @@ export default class NewPin extends Component {
         }}
         open={this.state.modalOpen}
         size="mini"
-        trigger={<Button color="blue" content="New Card" onClick={this.handleOpen} icon="plus" />}
+        trigger={
+          <Button
+            color="blue"
+            content="New Card"
+            onClick={() => {
+              this.handleOpen()
+            }}
+            icon="plus"
+          />
+        }
       >
         <Modal.Header>New Card</Modal.Header>
         <Modal.Content>
@@ -99,7 +108,12 @@ export default class NewPin extends Component {
               onChange={this.handleImg}
             />
             <br />
-            <Button color="blue" onClick={this.handleSubmit}>
+            <Button
+              color="blue"
+              onClick={() => {
+                this.handleSubmit()
+              }}
+            >
               Submit
             </Button>
           </div>
