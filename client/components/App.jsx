@@ -80,6 +80,29 @@ export default class App extends Component {
   showLoggedUserPins() {
     this.setState({ showAllPins: false, showLoggedUserPins: true })
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    //An unsuccessful attempt to work around the start(user) update issue
+    const { logged, loggedUser, allPins, showLoggedUserPins, showAllPins } = this.state
+    if (allPins !== nextState.allPins) {
+      if (DEV) {
+        console.log('allPins and nextState.allPins are different again!')
+      }
+      return true
+    } else if (
+      logged !== nextState.logged ||
+      loggedUser !== nextState.loggedUser ||
+      allPins !== nextState.allPins ||
+      showLoggedUserPins !== nextState.showLoggedUserPins ||
+      showAllPins !== nextState.showAllPins
+    ) {
+      if (DEV) {
+        console.log('Normal update...')
+      }
+      return true
+    } else {
+      return false
+    }
+  }
   componentWillMount() {
     if (DEV) {
       console.log('Will mount App...')
