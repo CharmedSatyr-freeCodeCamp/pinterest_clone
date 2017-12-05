@@ -35,34 +35,32 @@ export default class NavBar extends Component {
     const { activeItem } = this.state
     const { loggedUser } = this.props
     return (
-      <Menu fixed="top" inverted pointing>
+      <Menu fixed="top" inverted pointing stackable>
         <Container>
           <Menu.Item header style={{ fontSize: '120%' }} className="fantasyFont">
             <Image alt="Glowing Black Satyr" src={glowsatyr} className="navSatyr" />
             Welcome, {loggedUser}
           </Menu.Item>
-          <Menu.Item>
+          <Menu.Item style={{ fontSize: '110%' }}>
             <NewPin loggedUser={loggedUser} />
           </Menu.Item>
           <Menu.Item
             active={activeItem === 'showLoggedUserPins'}
             as="a"
-            onClick={() => {
-              this.handleLoggedUserPinsClick()
-            }}
+            onClick={this.handleLoggedUserPinsClick}
+            style={{ fontSize: '110%' }}
           >
-            Your Pins
+            Your Cards
           </Menu.Item>
           <Menu.Item
             active={activeItem === 'showAllPins'}
             as="a"
-            onClick={() => {
-              this.handleAllPinsClick()
-            }}
+            onClick={this.handleAllPinsClick}
+            style={{ fontSize: '110%' }}
           >
-            Recent Pins
+            Recent Cards
           </Menu.Item>
-          <Menu.Item as="a" href="/logout" position="right">
+          <Menu.Item as="a" href="/logout" position="right" style={{ fontSize: '110%' }}>
             Log Out
           </Menu.Item>
         </Container>

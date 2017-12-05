@@ -15,16 +15,16 @@ import satyr from '../img/Black-Satyr.png'
 /*** MAIN ***/
 const LoginBar = () => {
   return (
-    <Menu fixed="top" inverted>
+    <Menu fixed="top" inverted stackable>
       <Container>
         <Menu.Item header style={{ fontSize: '120%' }} className="fantasyFont">
           <Image alt="Glowing Black Satyr" src={glowsatyr} className="navSatyr" />
-          Welcome to Sorcerer City, a fantasy-themed Pinterest clone built for freeCodeCamp
+          Welcome to Sorcerer City, a fantasy-themed inspiration engine
         </Menu.Item>
         <Modal
           size="mini"
           trigger={
-            <Menu.Item as="a" position="right">
+            <Menu.Item as="a" position="right" style={{ fontSize: '110%' }}>
               Login
             </Menu.Item>
           }

@@ -35,7 +35,7 @@ export default class NewPin extends Component {
     this.handleImg = this.handleImg.bind(this)
   }
   handleClose() {
-    this.setState({ modalOpen: false })
+    this.setState({ image: dummy, modalOpen: false, title: 'Add a Title!' })
   }
   handleImg() {
     const image = document.getElementById('pinImg').value
@@ -81,18 +81,9 @@ export default class NewPin extends Component {
         }}
         open={this.state.modalOpen}
         size="mini"
-        trigger={
-          <Button
-            color="blue"
-            content="New Pin"
-            onClick={() => {
-              this.handleOpen()
-            }}
-            icon="plus"
-          />
-        }
+        trigger={<Button color="blue" content="New Card" onClick={this.handleOpen} icon="plus" />}
       >
-        <Modal.Header>New Pin</Modal.Header>
+        <Modal.Header>New Card</Modal.Header>
         <Modal.Content>
           <div className="newpin">
             <Header as="h1" textAlign="center">
@@ -108,12 +99,7 @@ export default class NewPin extends Component {
               onChange={this.handleImg}
             />
             <br />
-            <Button
-              color="blue"
-              onClick={() => {
-                this.handleSubmit()
-              }}
-            >
+            <Button color="blue" onClick={this.handleSubmit}>
               Submit
             </Button>
           </div>

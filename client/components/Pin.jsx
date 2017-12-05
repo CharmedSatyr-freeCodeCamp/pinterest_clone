@@ -5,7 +5,7 @@
 import React, { Component } from 'react'
 
 //Semantic UI React
-import { Button, Card, Image, Modal } from 'semantic-ui-react'
+import { Button, Card, Image, Modal, Transition } from 'semantic-ui-react'
 
 //App
 import Like from './Like.jsx'
@@ -25,9 +25,11 @@ import dummy from '../img/image.png'
 export default class Pin extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = { modalOpen: false }
     this.addDefaultSrc = this.addDefaultSrc.bind(this)
     this.deletePin = this.deletePin.bind(this)
+    this.handleClose = this.handleClose.bind(this)
+    this.handleOpen = this.handleOpen.bind(this)
     this.toggleLikePin = this.toggleLikePin.bind(this)
   }
   //Broken image fix on error
@@ -44,7 +46,14 @@ export default class Pin extends Component {
     const data = encodeURIComponent(JSON.stringify(obj))
     f('DELETE', '/api/deletePin/' + data, response => {
       //console.log(response)
+      this.handleClose()
     })
+  }
+  handleClose() {
+    this.setState({ modalOpen: false })
+  }
+  handleOpen() {
+    this.setState({ modalOpen: true })
   }
   toggleLikePin() {
     const { img, loggedUser, owner, title } = this.props
@@ -66,8 +75,17 @@ export default class Pin extends Component {
       <Card raised style={{ margin: 5 }}>
         <Modal
           closeIcon
+          onClose={this.handleClose}
+          open={this.state.modalOpen}
           size="small"
-          trigger={<Image alt={title} onError={this.addDefaultSrc} src={url ? img : dummy} />}
+          trigger={
+            <Image
+              alt={title}
+              onClick={this.handleOpen}
+              onError={this.addDefaultSrc}
+              src={url ? img : dummy}
+            />
+          }
         >
           <Image
             alt={title}
@@ -80,15 +98,8 @@ export default class Pin extends Component {
             {title}
             {/* Only show the Remove button to the pin's owner */}
             {loggedUser === owner ? (
-              <Button
-                floated="right"
-                onClick={() => {
-                  this.deletePin()
-                }}
-                negative
-                style={{ marginTop: -5 }}
-              >
-                Delete Pin
+              <Button floated="right" onClick={this.deletePin} negative style={{ marginTop: -5 }}>
+                Delete Card
               </Button>
             ) : null}
           </Modal.Header>

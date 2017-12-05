@@ -55,26 +55,11 @@ export default class Like extends Component {
       <span>
         {loggedUserLike ? (
           <Transition animation={'pulse'} duration={500} visible={full}>
-            <Icon
-              link
-              name="heart"
-              size="large"
-              color="red"
-              onClick={() => {
-                this.toggleLikePin()
-              }}
-            />
+            <Icon link name="heart" size="large" color="red" onClick={this.toggleLikePin} />
           </Transition>
         ) : (
           <Transition animation={'pulse'} duration={500} visible={empty}>
-            <Icon
-              link
-              name="empty heart"
-              size="large"
-              onClick={() => {
-                this.toggleLikePin()
-              }}
-            />
+            <Icon link name="empty heart" size="large" onClick={this.toggleLikePin} />
           </Transition>
         )}
         {likes.length}
