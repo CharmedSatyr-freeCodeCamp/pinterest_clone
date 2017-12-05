@@ -41,26 +41,20 @@ export default class NavBar extends Component {
             <Image alt="Glowing Black Satyr" src={glowsatyr} className="navSatyr" />
             Welcome, {loggedUser}
           </Menu.Item>
-          <Menu.Item style={{ fontSize: '110%' }}>
+          <Menu.Item>
             <NewPin loggedUser={loggedUser} />
           </Menu.Item>
           <Menu.Item
             active={activeItem === 'showLoggedUserPins'}
             as="a"
             onClick={this.handleLoggedUserPinsClick}
-            style={{ fontSize: '110%' }}
           >
             Your Cards
           </Menu.Item>
-          <Menu.Item
-            active={activeItem === 'showAllPins'}
-            as="a"
-            onClick={this.handleAllPinsClick}
-            style={{ fontSize: '110%' }}
-          >
+          <Menu.Item active={activeItem === 'showAllPins'} as="a" onClick={this.handleAllPinsClick}>
             Recent Cards
           </Menu.Item>
-          <Menu.Item as="a" href="/logout" position="right" style={{ fontSize: '110%' }}>
+          <Menu.Item as="a" href="/logout" position="right">
             Log Out
           </Menu.Item>
         </Container>

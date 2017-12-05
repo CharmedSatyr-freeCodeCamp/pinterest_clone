@@ -24,7 +24,7 @@ const LoginBar = () => {
         <Modal
           size="mini"
           trigger={
-            <Menu.Item as="a" position="right" style={{ fontSize: '110%' }}>
+            <Menu.Item as="a" position="right">
               Login
             </Menu.Item>
           }
