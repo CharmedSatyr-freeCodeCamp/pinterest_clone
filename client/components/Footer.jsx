@@ -10,7 +10,7 @@ import { Container, Icon, Menu } from 'semantic-ui-react'
 /*** MAIN ***/
 const Footer = () => {
   return (
-    <Menu fixed="bottom" inverted>
+    <Menu fixed="bottom" inverted stackable>
       <Container>
         <Menu.Item
           as="a"
