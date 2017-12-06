@@ -51,13 +51,9 @@ export default class App extends Component {
     }
     //Keeps allPins up to date for all users without browser refresh
     const cb2 = response => {
-      if (response !== this.state.allPins) {
-        /* Checking for differences is intended as a performance          *
-         * enchancement.For some reason, (response !== this.state.allPins)*
-         * almost always returns true, though.                            */
-        if (DEV) {
-          //console.log('Updating allPins state...')
-        }
+      /* Update only if the two arrays of objects are different. *
+       * Checking for string equality here is a quick, easy test.*/
+      if (JSON.stringify(response) !== JSON.stringify(this.state.allPins)) {
         this.setState({ allPins: response })
       }
     }
@@ -79,29 +75,6 @@ export default class App extends Component {
   }
   showLoggedUserPins() {
     this.setState({ showAllPins: false, showLoggedUserPins: true })
-  }
-  shouldComponentUpdate(nextProps, nextState) {
-    //An unsuccessful attempt to work around the start(user) update issue
-    const { logged, loggedUser, allPins, showLoggedUserPins, showAllPins } = this.state
-    if (allPins !== nextState.allPins) {
-      if (DEV) {
-        //console.log('allPins and nextState.allPins are different again!')
-      }
-      return true
-    } else if (
-      logged !== nextState.logged ||
-      loggedUser !== nextState.loggedUser ||
-      allPins !== nextState.allPins ||
-      showLoggedUserPins !== nextState.showLoggedUserPins ||
-      showAllPins !== nextState.showAllPins
-    ) {
-      if (DEV) {
-        console.log('Normal update...')
-      }
-      return true
-    } else {
-      return false
-    }
   }
   componentWillMount() {
     if (DEV) {

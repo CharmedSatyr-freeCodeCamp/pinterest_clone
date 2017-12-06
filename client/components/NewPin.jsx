@@ -72,6 +72,13 @@ export default class NewPin extends Component {
       })
     }
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state !== nextState) {
+      return true
+    } else {
+      return false
+    }
+  }
   render() {
     return (
       <Modal
