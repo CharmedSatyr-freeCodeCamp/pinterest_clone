@@ -91,14 +91,15 @@ export default class App extends Component {
     return (
       <div>
         <header>
-          <NavBar
-            showAllPins={this.showAllPins}
-            showLoggedUserPins={this.showLoggedUserPins}
-            loggedUser={loggedUser}
-          />
+          <nav>
+            <NavBar
+              showAllPins={this.showAllPins}
+              showLoggedUserPins={this.showLoggedUserPins}
+              loggedUser={loggedUser}
+            />
+          </nav>
         </header>
         <main>
-          {' '}
           {showLoggedUserPins ? (
             <PinWall logged={logged} wallPins={loggedUserPins} loggedUser={loggedUser} />
           ) : (
