@@ -70,7 +70,9 @@ export default class Pin extends Component {
   }
   render() {
     const { img, likes, logged, loggedUser, loggedUserLike, owner, title } = this.props
-    let url = isURL(img)
+    //URL is validated by validator package. Must be HTTPS protocol.
+    const options = { protocols: ['https'], require_protocol: true }
+    const url = isURL(img, options)
     return (
       <Card raised style={{ margin: 5 }}>
         <Modal
