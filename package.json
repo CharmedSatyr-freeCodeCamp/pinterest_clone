@@ -23,7 +23,7 @@
    ],
    "scripts": {
       "start": "npm-run-all --parallel watch:client watch:server",
-      "deploy": "node dist/server.bundle.js",
+      "deploy": "webpack --config webpack.config.babel.js; node dist/server.bundle.js",
       "build": "webpack --config webpack.config.babel.js",
       "watch:client": "webpack --watch --config webpack.config.babel.js",
       "watch:server": "nodemon server/server.js --exec babel-node --presets env",
