@@ -22,6 +22,18 @@ import {
 
 /*** ROUTES ***/
 export const routes = (app, passport) => {
+  //Enforce HTTPS in production
+  if (PROD) {
+    app.use('*', (req, res, next) => {
+      if (req.headers['x-forwarded-proto'] !== 'https') {
+        console.log('Redirecting to', process.env.APP_URL + req.url)
+        res.redirect(process.env.APP_URL + req.url)
+      } else {
+        next() /* Continue to other routes if we're not redirecting */
+      }
+    })
+  }
+
   //This is the name that will display in the client view
   let name_view
 

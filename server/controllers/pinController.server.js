@@ -16,30 +16,12 @@ import Pin from '../models/Pin.js'
 
 //Root view
 export const root = (req, res) => {
-  //Enforce HTTPS in production
-  if (PROD) {
-    if (req.headers['x-forwarded-proto'] !== 'https') {
-      res.redirect(process.env.APP_URL)
-    } else {
-      res.sendFile(path + '/dist/index.html')
-    }
-  } else {
-    res.sendFile(path + '/dist/index.html')
-  }
+  res.sendFile(path + '/dist/index.html')
 }
 
 //Login view
 export const login = (req, res) => {
-  //Enforce HTTPS in production
-  if (PROD) {
-    if (req.headers['x-forwarded-proto'] !== 'https') {
-      res.redirect(process.env.APP_URL + '/login')
-    } else {
-      res.sendFile(path + '/dist/login.html')
-    }
-  } else {
-    res.sendFile(path + '/dist/login.html')
-  }
+  res.sendFile(path + '/dist/login.html')
 }
 
 //Toggle Like Pin
