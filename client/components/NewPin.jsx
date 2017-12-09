@@ -26,7 +26,8 @@ export default class NewPin extends Component {
     this.state = {
       modalOpen: false,
       title: 'Add a Title!',
-      image: dummy
+      image: dummy,
+      error: ''
     }
     this.handleClose = this.handleClose.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
@@ -39,27 +40,40 @@ export default class NewPin extends Component {
   }
   handleImg() {
     const image = document.getElementById('pinImg').value
-    //URL is validated by validator package
-    if (isURL(image)) {
+    //URL is validated by validator package. Must be HTTPS protocol.
+    const options = { protocols: ['https'], require_protocol: true }
+    if (isURL(image, options)) {
       this.setState({
         image: image
       })
+      return true
+    } else {
+      return false
     }
   }
   handleOpen() {
     this.setState({ modalOpen: true })
   }
   handleSubmit() {
-    const obj = {
-      title: this.state.title !== 'Add a Title!' ? this.state.title : 'Untitled',
-      img: this.state.image,
-      owner: this.props.loggedUser
+    if (this.handleImg()) {
+      const obj = {
+        title: this.state.title !== 'Add a Title!' ? this.state.title : 'Untitled',
+        img: this.state.image,
+        owner: this.props.loggedUser
+      }
+      const data = encodeURIComponent(JSON.stringify(obj))
+      f('POST', '/api/savePin/' + data, response => {
+        //console.log(response)
+        this.handleClose()
+        this.setState({ error: '' })
+      })
+    } else {
+      //Prompt user for HTTPS link on failed submission.
+      const text = 'Make sure your link starts with "https"!'
+      this.setState({
+        error: text
+      })
     }
-    const data = encodeURIComponent(JSON.stringify(obj))
-    f('POST', '/api/savePin/' + data, response => {
-      //console.log(response)
-      this.handleClose()
-    })
   }
   handleTitle() {
     //Title can be no more than 40 characters and can't contain `{}<>`
@@ -114,6 +128,9 @@ export default class NewPin extends Component {
               placeholder="https://www.website.com/photo.jpg"
               onChange={this.handleImg}
             />
+            <div style={{ color: 'red', textAlign: 'center', margin: 7 }}>
+              <strong>{this.state.error}</strong>
+            </div>
             <br />
             <Button
               color="blue"
