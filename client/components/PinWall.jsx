@@ -38,7 +38,8 @@ const PinWall = ({ wallPins, logged, loggedUser }) => {
   return (
     <Container
       style={{
-        width: '74vw'
+        width: '74vw',
+        marginBottom: '15vh'
       }}
     >
       <Masonry
