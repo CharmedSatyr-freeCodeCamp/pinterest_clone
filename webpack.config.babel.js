@@ -6,18 +6,19 @@ import HTMLWebpackPlugin from 'html-webpack-plugin'
 import webpack from 'webpack'
 import nodeExternals from 'webpack-node-externals'
 
-/*** DEVELOPMENT TOOLS ***/
+/*** TOOLS ***/
 dotenv.load()
 const PROD = process.env.NODE_ENV === 'production'
 
 /*** COMMON CONFIGURATIONS ***/
+//https://webpack.js.org/configuration/node/
 const nodeConfig = {
-  //console: false,
+  console: false, //default
   //global: false,
   //process: false,
   //Buffer: false,
-  //  __filename: false,
-  //__dirname: false,
+  __filename: false, //use regular Node __filename behavior instead of 'mock'
+  __dirname: false, //use regular Node __dirname behavior instead of 'mock'
   fs: 'empty' //Prevents webpack error "Cannot resolve module 'fs'..."
 }
 
@@ -40,8 +41,8 @@ const uglyConfig = new webpack.optimize.UglifyJsPlugin({ ie8: false, ecma: 8 })
 /*** CLIENT CONFIG ***/
 const client = {
   entry: {
-    index: [__dirname + '/client/index.jsx', 'babel-polyfill'],
-    login: [__dirname + '/client/login.jsx', 'babel-polyfill']
+    login: [__dirname + '/client/login.jsx', 'babel-polyfill'],
+    index: [__dirname + '/client/index.jsx', 'babel-polyfill']
   },
   devtool: PROD ? false : 'source-map',
   module: {
@@ -54,25 +55,7 @@ const client = {
         options: { presets: ['env', 'react'] }
       },
       {
-        test: /\.(css)$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          publicPath: '../',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                //importLoaders: 1,
-                minimize: PROD ? true : false
-              }
-            },
-            'postcss-loader'
-          ]
-        })
-      },
-
-      {
-        test: /\.(sass|scss)$/,
+        test: /\.(css|sass|scss)$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           publicPath: '../', //The Plugin assumes css is in the same directory as the html by default (?) and redoes paths!
@@ -80,10 +63,11 @@ const client = {
             {
               loader: 'css-loader',
               options: {
+                importLoaders: 1,
                 minimize: PROD ? true : false
               }
             },
-            'postcss-loader',
+            'postcss-loader', //autoprefixer is bundled with cssnext; cssnano is bundled with css-loader, though we could require it explicitly in .postcssrc
             {
               loader: 'sass-loader',
               options: {
@@ -109,7 +93,7 @@ const client = {
         }
       },
       {
-        test: /\.(eot|ttf|svg|woff|woff2)$/i,
+        test: /\.(eot|otf|ttf|svg|woff|woff2)$/i,
         loader: 'url-loader',
         options: {
           limit: 10000,
@@ -148,15 +132,15 @@ const client = {
       ]
     : [
         new HTMLWebpackPlugin({
-          title: 'Charmed Books',
-          template: __dirname + '/client/' + 'index.html',
-          filename: __dirname + '/dist/' + 'index.html',
+          title: 'Login',
+          template: __dirname + '/client/' + 'login.html',
+          filename: __dirname + '/dist/' + 'login.html',
           inject: false //'body' // Injects *all* scripts and css if enabled
         }),
         new HTMLWebpackPlugin({
-          title: 'Test',
-          template: __dirname + '/client/' + 'login.html',
-          filename: __dirname + '/dist/' + 'login.html',
+          title: 'Sorcerer City',
+          template: __dirname + '/client/' + 'index.html',
+          filename: __dirname + '/dist/' + 'index.html',
           inject: false //'body' // Injects *all* scripts and css if enabled
         }),
         new ExtractTextPlugin({
@@ -188,7 +172,7 @@ const server = {
     ]
   },
   target: 'node',
-  //  node: nodeConfig,
+  node: nodeConfig,
   externals: [nodeExternals()],
   plugins: PROD ? [environmentConfig, compConfig, uglyConfig] : [environmentConfig]
 }
