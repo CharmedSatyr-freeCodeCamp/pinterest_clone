@@ -16,7 +16,7 @@ import Pin from './Pin.jsx'
 /*** MAIN ***/
 const PinWall = ({ wallPins, logged, loggedUser }) => {
   const masonryOptions = {
-    transitionDuration: 0
+    transitionDuration: 500
   }
   const show = wallPins.map((item, index) => {
     //Check to see if the loggedUser liked the Pin already
