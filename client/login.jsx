@@ -12,10 +12,10 @@ import 'semantic-ui-css/semantic.min.css'
 import sass from './styles/styles.scss'
 
 //App
-import SignupLoginPage from './components/SignupLoginPage.jsx'
+import LoginPage from './components/LoginPage.jsx'
 
 //Favicon
 import './img/favicon.ico'
 
 //Render
-ReactDOM.render(<SignupLoginPage />, document.getElementById('login'))
+ReactDOM.render(<LoginPage />, document.getElementById('login'))
