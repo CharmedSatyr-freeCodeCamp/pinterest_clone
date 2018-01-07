@@ -21,8 +21,10 @@ export default class LoginPage extends Component {
     }
   }
   componentDidMount() {
-    /* Artificially extending page load time to show cool loader and
+    /* Wizard loader shows in HTML/CSS before React has rendered or if JS is
+     * disabled. This function artificially extends page load time to
      * allow more user-generated images to fully load.
+     * Also, the wizard loader is cool and users should see it...
      * Login.html prefetches main app scripts to avoid this in App.jsx */
     setTimeout(() => this.setState({ loading: false }), 1500)
   }
