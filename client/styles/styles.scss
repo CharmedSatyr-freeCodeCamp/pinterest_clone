@@ -21,3 +21,13 @@ body {
   height: 50px;
   margin: -10px 1.25em 0 auto;
 }
+/*
+//These styles from semantic-ui-css interfere with react-masonry-component transitions and should be removed
+.ui.card,
+.ui.cards > .card {
+  -webkit-transition: box-shadow 0.1s ease, -webkit-transform 0.1s ease;
+  transition: box-shadow 0.1s ease, -webkit-transform 0.1s ease;
+  transition: box-shadow 0.1s ease, transform 0.1s ease;
+  transition: box-shadow 0.1s ease, transform 0.1s ease, -webkit-transform 0.1s ease;
+}
+*/
