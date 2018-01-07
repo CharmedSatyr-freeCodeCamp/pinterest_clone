@@ -1,1 +1,903 @@
-!function(e){function t(i){if(n[i])return n[i].exports;var r=n[i]={i:i,l:!1,exports:{}};return e[i].call(r.exports,r,r.exports,t),r.l=!0,r.exports}var n={};t.m=e,t.c=n,t.d=function(e,n,i){t.o(e,n)||Object.defineProperty(e,n,{configurable:!1,enumerable:!0,get:i})},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=4)}([function(e,t){e.exports=require("dotenv")},function(e,t){e.exports=require("mongoose")},function(e,t){e.exports=require("babel-polyfill")},function(e,t,n){"use strict";function i(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0}),t.deletePin=t.savePin=t.unpinAll=t.updateAllPins=t.allPins=t.toggleLikePin=t.login=t.root=void 0;var r=n(0),o=i(r),u=n(17),s=i(u),a=process.cwd();o.default.load();t.root=function(e,t){t.sendFile(a+"/dist/index.html")},t.login=function(e,t){t.sendFile(a+"/dist/login.html")},t.toggleLikePin=function(e,t){var n=JSON.parse(decodeURIComponent(e.params.data)),i=n.title,r=n.img,o=n.owner,u=n.loggedUser;s.default.findOne({title:i,img:r,owner:o},function(e,n){e&&console.error(e),n&&(n.likes.indexOf(u)>=0?n.likes.splice(n.likes.indexOf(u),1):null!==u&&n.likes.push(u),n.save(function(e,n){t.json("Saved"+n)}))})},t.allPins=function(e,t){s.default.find({}).sort({created:"descending"}).exec(function(e,n){e&&console.error(e),n&&t.json(n)})},t.updateAllPins=function(e,t){s.default.find({}).sort({created:"descending"}).exec(function(n,i){n&&console.error(n),i&&e.emit(t,i)})},t.unpinAll=function(e,t){s.default.remove({},function(e,n){t.json("All pins deleted.")})},t.savePin=function(e,t){var n=JSON.parse(decodeURIComponent(e.params.data)),i=n.title,r=n.img,o=n.owner;s.default.findOne({title:i,img:r,owner:o},function(e,n){if(e&&console.error(e),n)t.json("You already pinned this!");else{new s.default({title:i,img:r,owner:o}).save(function(e,n){e&&console.error(e),t.json("Your pin has been saved!")})}})},t.deletePin=function(e,t){var n=JSON.parse(decodeURIComponent(e.params.data)),i=n.title,r=n.img,o=n.owner;s.default.remove({title:i,img:r,owner:o},function(e,n){e&&console.error(e),n&&t.json("Your pin has been deleted.")})}},function(e,t,n){n(2),e.exports=n(5)},function(e,t,n){"use strict";function i(e){return e&&e.__esModule?e:{default:e}}n(2);var r=n(6),o=i(r);n(7);var u=n(8),s=i(u),a=n(0),l=i(a),c=n(9),d=i(c),f=n(10),p=i(f),g=n(1),v=i(g),m=n(11),h=i(m),w=n(12),x=i(w),P=n(13),_=i(P),b=n(14),y=i(b),S=n(15),R=i(S),O=n(16),k=n(18),q=n(22),U=i(q),j=n(23),M=i(j),C=n(24),E=i(C);o.default.polyfill();var T=(0,s.default)(),A=process.cwd();l.default.load();T.use((0,d.default)("tiny")),T.use((0,p.default)()),T.use("/js",s.default.static(A+"/dist/js")),T.use("/styles",s.default.static(A+"/dist/styles")),T.use("/img",s.default.static(A+"/dist/img")),T.use("/fonts",s.default.static(A+"/dist/fonts"));var N=v.default.connection;v.default.Promise=o.default,v.default.connect(process.env.MONGO_URI,{useMongoClient:!0},function(e,t){e?console.error("Failed to connect to database!"):console.log("Connected to database.")});var I=(0,_.default)(h.default);T.use(y.default.urlencoded({extended:!1})),T.use((0,R.default)());var L={secret:process.env.SECRET,resave:!1,saveUninitialized:!1,cookie:{path:"/",httpOnly:!1,maxAge:18e5},store:new I({mongooseConnection:N},function(e){console.error(e)}),name:"id"};T.set("trust proxy",1),L.cookie.secure=!0,L.cookie.httpOnly=!0,T.use((0,h.default)(L)),T.use(x.default.initialize()),T.use(x.default.session()),(0,k.authConfig)(x.default),(0,O.routes)(T,x.default);var D=U.default.createServer(T),Y=(0,M.default)(D);(0,E.default)(Y);var z=process.env.PORT;D.listen(z,function(){console.log("Server is listening on port "+z+".")})},function(e,t){e.exports=require("es6-promise")},function(e,t){e.exports=require("isomorphic-fetch")},function(e,t){e.exports=require("express")},function(e,t){e.exports=require("morgan")},function(e,t){e.exports=require("compression")},function(e,t){e.exports=require("express-session")},function(e,t){e.exports=require("passport")},function(e,t){e.exports=require("connect-mongo")},function(e,t){e.exports=require("body-parser")},function(e,t){e.exports=require("cookie-parser")},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.routes=void 0;var i=n(0),r=function(e){return e&&e.__esModule?e:{default:e}}(i),o=n(3);process.cwd();r.default.load();t.routes=function(e,t){e.use("*",function(e,t,n){"https"!==e.headers["x-forwarded-proto"]?(console.log("Redirecting to",process.env.APP_URL+e.url),t.redirect(process.env.APP_URL+e.url)):n()});var n=void 0,i=function(e,t,i){if(e.isAuthenticated())return e.user.github.username?n=e.user.github.username:e.user.twitter.username&&(n=e.user.twitter.username),console.log("USER:",n),i();t.redirect("/login")};e.route("/").get(i,o.root),e.route("/login").get(o.login),e.route("/auth/github").get(t.authenticate("github")),e.route("/auth/github/callback").get(t.authenticate("github",{successRedirect:"/",failureRedirect:"/login"})),e.route("/auth/twitter").get(t.authenticate("twitter")),e.route("/auth/twitter/callback").get(t.authenticate("twitter",{successRedirect:"/",failureRedirect:"/login"})),e.route("/api/users/logged").get(function(e,t){n?t.json(n):(console.log("name_view ERROR"),t.json("Stranger"))}),e.route("/logout").get(function(e,t){e.logout(),t.redirect("/login")}),e.route("/api/savePin/:data").post(o.savePin),e.route("/api/deletePin/:data").delete(o.deletePin),e.route("/api/allPins").get(o.allPins),e.route("/api/toggleLikePin/:data").post(o.toggleLikePin)}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var i=n(1),r=function(e){return e&&e.__esModule?e:{default:e}}(i),o=r.default.Schema,u=new o({created:{type:Date,required:!0,default:new Date,expires:"365d"},img:{type:String,default:"../../client/img/image.png"},likes:[String],shares:[String],title:{type:String,required:!0},owner:{type:String,required:!0}});t.default=r.default.model("Pin",u)},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.authConfig=void 0;var i=n(19),r=function(e){return e&&e.__esModule?e:{default:e}}(i),o=n(20).Strategy,u=n(21).Strategy;t.authConfig=function(e){e.serializeUser(function(e,t){t(null,e.id)}),e.deserializeUser(function(e,t){r.default.findById(e,function(e,n){t(e,n)})}),e.use(new u({consumerKey:process.env.TWITTER_CONSUMER_KEY,consumerSecret:process.env.TWITTER_CONSUMER_SECRET,callbackURL:process.env.APP_URL+"/auth/twitter/callback/"},function(e,t,n,i){process.nextTick(function(){r.default.findOne({"twitter.id":n.id},function(e,t){if(e)return i(e);if(t)return i(null,t);var o=new r.default;o.twitter.id=n.id,o.twitter.username=n.username,o.twitter.displayName=n.displayName,o.save(function(e){if(e)throw e;return i(null,o)})})})})),e.use(new o({clientID:process.env.GITHUB_KEY,clientSecret:process.env.GITHUB_SECRET,callbackURL:process.env.APP_URL+"/auth/github/callback/"},function(e,t,n,i){process.nextTick(function(){r.default.findOne({"github.id":n.id},function(e,t){if(e)return i(e);if(t)return i(null,t);var o=new r.default;o.github.id=n.id,o.github.username=n.username,o.github.displayName=n.displayName,o.save(function(e){if(e)throw e;return i(null,o)})})})}))}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var i=n(1),r=i.Schema,o=new r({github:{id:String,displayName:String,username:String,created:{type:Date,required:!0,default:new Date,expires:"365d"}},twitter:{id:String,displayName:String,username:String,created:{type:Date,required:!0,default:new Date,expires:"365d"}}});t.default=i.model("User",o)},function(e,t){e.exports=require("passport-github2")},function(e,t){e.exports=require("passport-twitter")},function(e,t){e.exports=require("http")},function(e,t){e.exports=require("socket.io")},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var i=n(0),r=function(e){return e&&e.__esModule?e:{default:e}}(i),o=n(3);process.cwd();r.default.load();var u=function(e){e.on("connection",function(t){t.emit("start","Regular communications received..."),t.on("start",function(e){setInterval(function(){(0,o.updateAllPins)(t,"updateAllPins")},e)}),e.on("disconnect",function(){console.log("Web Sockets disconnected.")})})};t.default=u}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports) {
+
+module.exports = require("dotenv");
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+module.exports = require("mongoose");
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+module.exports = require("babel-polyfill");
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*** ENVIRONMENT ***/
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.deletePin = exports.savePin = exports.unpinAll = exports.updateAllPins = exports.allPins = exports.toggleLikePin = exports.login = exports.root = undefined;
+
+var _dotenv = __webpack_require__(0);
+
+var _dotenv2 = _interopRequireDefault(_dotenv);
+
+var _Pin = __webpack_require__(17);
+
+var _Pin2 = _interopRequireDefault(_Pin);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var path = process.cwd();
+
+_dotenv2.default.load();
+
+/*** DEVELOPMENT TOOLS ***/
+var DEV = "development" === 'development';
+var PROD = "development" === 'production';
+
+/*** MODEL ***/
+
+
+/*** FUNCTIONS ***/
+
+//Root view
+var root = exports.root = function root(req, res) {
+  res.sendFile(path + '/dist/index.html');
+};
+
+//Login view
+var login = exports.login = function login(req, res) {
+  res.sendFile(path + '/dist/login.html');
+};
+
+//Toggle Like Pin
+var toggleLikePin = exports.toggleLikePin = function toggleLikePin(req, res) {
+  var obj = JSON.parse(decodeURIComponent(req.params.data));
+  var title = obj.title;
+  var img = obj.img;
+  var owner = obj.owner;
+  var user = obj.loggedUser;
+
+  _Pin2.default.findOne({
+    title: title,
+    img: img,
+    owner: owner
+  }, function (err, doc) {
+    if (err) {
+      console.error(err);
+    }
+    if (doc) {
+      //If the user already liked the pin
+      if (doc.likes.indexOf(user) >= 0) {
+        //Remove the like
+        doc.likes.splice(doc.likes.indexOf(user), 1);
+        if (DEV) {
+          console.log('This pin has been unliked!');
+        }
+      } else {
+        //Otherwise add it - but don't add a null value as a like
+        if (user !== null) {
+          doc.likes.push(user);
+        }
+        if (DEV) {
+          console.log('This pin has been liked!');
+        }
+      }
+      //Save what happened
+      doc.save(function (err, result) {
+        res.json('Saved' + result);
+      });
+    }
+  });
+};
+
+//Get all pins
+var allPins = exports.allPins = function allPins(req, res) {
+  _Pin2.default.find({})
+  //Show most recent first
+  .sort({ created: 'descending' }).exec(function (err, doc) {
+    if (err) {
+      console.error(err);
+    }
+    if (doc) {
+      res.json(doc);
+    }
+  });
+};
+
+//updateAllPins - web socket controller
+var updateAllPins = exports.updateAllPins = function updateAllPins(socket, message) {
+  _Pin2.default.find({})
+  //Show most recent first
+  .sort({ created: 'descending' }).exec(function (err, doc) {
+    if (err) {
+      console.error(err);
+    }
+    if (doc) {
+      socket.emit(message, doc);
+    }
+  });
+};
+
+//Delete all pins
+var unpinAll = exports.unpinAll = function unpinAll(req, res) {
+  _Pin2.default.remove({}, function (err, doc) {
+    res.json('All pins deleted.');
+  });
+};
+
+//Save new Pin
+var savePin = exports.savePin = function savePin(req, res) {
+  var obj = JSON.parse(decodeURIComponent(req.params.data));
+  var title = obj.title;
+  var img = obj.img;
+  var owner = obj.owner;
+  _Pin2.default.findOne({
+    title: title,
+    img: img,
+    owner: owner
+  }, function (err, doc) {
+    if (err) {
+      console.error(err);
+    }
+    if (doc) {
+      res.json('You already pinned this!');
+    } else {
+      var newPin = new _Pin2.default({
+        title: title,
+        img: img,
+        owner: owner
+      });
+      newPin.save(function (err, doc) {
+        if (err) {
+          console.error(err);
+        }
+        res.json('Your pin has been saved!');
+      });
+    }
+  });
+};
+
+//Delete Pin
+var deletePin = exports.deletePin = function deletePin(req, res) {
+  var obj = JSON.parse(decodeURIComponent(req.params.data));
+  var title = obj.title;
+  var img = obj.img;
+  var owner = obj.owner;
+
+  _Pin2.default.remove({
+    title: title,
+    img: img,
+    owner: owner
+  }, function (err, doc) {
+    if (err) {
+      console.error(err);
+    }
+    if (doc) {
+      res.json('Your pin has been deleted.');
+    }
+  });
+};
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(2);
+module.exports = __webpack_require__(5);
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*** ES6+ ***/
+
+__webpack_require__(2);
+
+var _es6Promise = __webpack_require__(6);
+
+var _es6Promise2 = _interopRequireDefault(_es6Promise);
+
+__webpack_require__(7);
+
+var _express = __webpack_require__(8);
+
+var _express2 = _interopRequireDefault(_express);
+
+var _dotenv = __webpack_require__(0);
+
+var _dotenv2 = _interopRequireDefault(_dotenv);
+
+var _morgan = __webpack_require__(9);
+
+var _morgan2 = _interopRequireDefault(_morgan);
+
+var _compression = __webpack_require__(10);
+
+var _compression2 = _interopRequireDefault(_compression);
+
+var _mongoose = __webpack_require__(1);
+
+var _mongoose2 = _interopRequireDefault(_mongoose);
+
+var _expressSession = __webpack_require__(11);
+
+var _expressSession2 = _interopRequireDefault(_expressSession);
+
+var _passport = __webpack_require__(12);
+
+var _passport2 = _interopRequireDefault(_passport);
+
+var _connectMongo = __webpack_require__(13);
+
+var _connectMongo2 = _interopRequireDefault(_connectMongo);
+
+var _bodyParser = __webpack_require__(14);
+
+var _bodyParser2 = _interopRequireDefault(_bodyParser);
+
+var _cookieParser = __webpack_require__(15);
+
+var _cookieParser2 = _interopRequireDefault(_cookieParser);
+
+var _indexServer = __webpack_require__(16);
+
+var _authConfig = __webpack_require__(18);
+
+var _http = __webpack_require__(22);
+
+var _http2 = _interopRequireDefault(_http);
+
+var _socket = __webpack_require__(23);
+
+var _socket2 = _interopRequireDefault(_socket);
+
+var _socketServer = __webpack_require__(24);
+
+var _socketServer2 = _interopRequireDefault(_socketServer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_es6Promise2.default.polyfill();
+
+/*** EXPRESS ***/
+
+var app = (0, _express2.default)();
+
+/*** ENVIRONMENT ***/
+var path = process.cwd();
+
+_dotenv2.default.load();
+
+/*** DEVELOPMENT TOOLS ***/
+var DEV = "development" === 'development';
+var PROD = "development" === 'production';
+
+DEV ? app.use((0, _morgan2.default)('dev')) : app.use((0, _morgan2.default)('tiny'));
+if (DEV) {
+  console.log('Development mode');
+}
+
+/*** ENABLE COMPRESSION ***/
+
+if (PROD) {
+  app.use((0, _compression2.default)());
+}
+
+/*** MIDDLEWARE ***/
+app.use('/js', _express2.default.static(path + '/dist/js')); //The first argument creates the virtual directory used in index.html
+app.use('/styles', _express2.default.static(path + '/dist/styles'));
+app.use('/img', _express2.default.static(path + '/dist/img'));
+app.use('/fonts', _express2.default.static(path + '/dist/fonts'));
+
+/*** MONGOOSE ***/
+
+var db = _mongoose2.default.connection;
+_mongoose2.default.Promise = _es6Promise2.default;
+_mongoose2.default.connect(process.env.MONGO_URI, { useMongoClient: true }, function (err, db) {
+  if (err) {
+    console.error('Failed to connect to database!');
+  } else {
+    console.log('Connected to database.');
+  }
+});
+
+/*** AUTHENTICATION ***/
+
+var MongoStore = (0, _connectMongo2.default)(_expressSession2.default);
+
+app.use(_bodyParser2.default.urlencoded({ extended: false }));
+app.use((0, _cookieParser2.default)());
+
+var sess = {
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    path: '/',
+    httpOnly: false,
+    maxAge: 1800000 //30 minutes
+  },
+  store: new MongoStore({ mongooseConnection: db }, function (err) {
+    console.error(err);
+  }), //defaults to MemoryStore instance, which can cause memory leaks
+  name: 'id'
+};
+
+if (PROD) {
+  app.set('trust proxy', 1);
+  sess.cookie.secure = true; //serve secure cookies in production
+  sess.cookie.httpOnly = true;
+}
+
+app.use((0, _expressSession2.default)(sess));
+app.use(_passport2.default.initialize());
+app.use(_passport2.default.session());
+
+/*** ROUTES ***/
+
+(0, _authConfig.authConfig)(_passport2.default);
+(0, _indexServer.routes)(app, _passport2.default);
+
+/*** WEB SOCKETS ***/
+
+var server = _http2.default.createServer(app);
+
+var io = (0, _socket2.default)(server);
+
+(0, _socketServer2.default)(io);
+
+/*** SERVE ***/
+var port = process.env.PORT;
+server.listen(port, function () {
+  console.log('Server is listening on port ' + port + '.');
+});
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+module.exports = require("es6-promise");
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+module.exports = require("isomorphic-fetch");
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+module.exports = require("express");
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+module.exports = require("morgan");
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+module.exports = require("compression");
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+module.exports = require("express-session");
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports) {
+
+module.exports = require("passport");
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
+module.exports = require("connect-mongo");
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+module.exports = require("body-parser");
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+module.exports = require("cookie-parser");
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*** ENVIRONMENT ***/
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.routes = undefined;
+
+var _dotenv = __webpack_require__(0);
+
+var _dotenv2 = _interopRequireDefault(_dotenv);
+
+var _pinControllerServer = __webpack_require__(3);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var path = process.cwd();
+
+_dotenv2.default.load();
+
+/*** DEVELOPMENT TOOLS ***/
+var DEV = "development" === 'development';
+var PROD = "development" === 'production';
+
+/*** CONTROLLERS ***/
+
+
+/*** ROUTES ***/
+var routes = exports.routes = function routes(app, passport) {
+  //Enforce HTTPS in production
+  if (PROD) {
+    app.use('*', function (req, res, next) {
+      if (req.headers['x-forwarded-proto'] !== 'https') {
+        console.log('Redirecting to', process.env.APP_URL + req.url);
+        res.redirect(process.env.APP_URL + req.url);
+      } else {
+        next(); /* Continue to other routes if we're not redirecting */
+      }
+    });
+  }
+
+  //This is the name that will display in the client view
+  var name_view = void 0;
+
+  //Authorization check
+  var permissions = function permissions(req, res, next) {
+    if (req.isAuthenticated()) {
+      if (DEV) {
+        console.log('AUTHORIZATION SUCCESSFUL');
+      }
+      if (req.user.github.username) {
+        name_view = req.user.github.username;
+      } else if (req.user.twitter.username) {
+        name_view = req.user.twitter.username;
+      }
+      console.log('USER:', name_view);
+      return next();
+    } else {
+      if (DEV) {
+        console.log('USER NOT AUTHORIZED');
+      }
+      res.redirect('/login');
+    }
+  };
+
+  /*
+  //Allows session's name_view to be accessed by controllers
+  app.use((req, res, next) => {
+    res.locals.name_view = name_view
+    next()
+  })
+  */
+
+  //Root view - developers don't have to log in to see the App
+  if (PROD) {
+    app.route('/').get(permissions, _pinControllerServer.root);
+  } else if (DEV) {
+    app.route('/').get(_pinControllerServer.root);
+  }
+
+  //Login view
+  app.route('/login').get(_pinControllerServer.login);
+
+  //GitHub and Passport.js authentication - URL
+  app.route('/auth/github').get(passport.authenticate('github'));
+
+  //GitHub and Passport.js authentication - callback
+  app.route('/auth/github/callback').get(passport.authenticate('github', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+  }));
+
+  //Twitter Auth
+  app.route('/auth/twitter').get(passport.authenticate('twitter'));
+
+  //Twitter Auth
+  app.route('/auth/twitter/callback').get(passport.authenticate('twitter', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+  }));
+
+  //Client-side API path to GET name_view
+  //Unclear why this won't work with a permissions check
+  app.route('/api/users/logged').get(
+  /*permissions,*/function (req, res) {
+    if (DEV) {
+      console.log('Client requesting username...');
+    }
+    if (name_view) {
+      res.json(name_view);
+    } else {
+      console.log('name_view ERROR');
+      res.json('Stranger');
+    }
+  });
+
+  //Passport logout
+  app.route('/logout').get(function (req, res) {
+    req.logout();
+    res.redirect('/login');
+  });
+
+  //Save new pin
+  //Unclear why this won't work with a permissions check
+  app.route('/api/savePin/:data').post( /*permissions,*/_pinControllerServer.savePin);
+
+  //Delete pin
+  //Unclear why this won't work with a permissions check
+  app.route('/api/deletePin/:data').delete( /*permissions,*/_pinControllerServer.deletePin);
+
+  //All pins
+  app.route('/api/allPins').get(_pinControllerServer.allPins);
+
+  //Like or unlike a pin
+  //Unclear why this won't work with a permissions check
+  app.route('/api/toggleLikePin/:data').post( /*permissions,*/_pinControllerServer.toggleLikePin);
+
+  /*** DEBUGGING - No UI ***/
+  //Delete all pins
+  if (DEV) {
+    app.use('/api/unpinAll', _pinControllerServer.unpinAll);
+  }
+};
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _mongoose = __webpack_require__(1);
+
+var _mongoose2 = _interopRequireDefault(_mongoose);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Schema = _mongoose2.default.Schema;
+
+var Pin = new Schema({
+  created: {
+    type: Date,
+    required: true,
+    default: new Date(),
+    expires: '365d'
+  },
+  img: {
+    type: String,
+    default: '../../client/img/image.png' //This is redundant from default client state
+  },
+  likes: [String],
+  shares: [String],
+  title: { type: String, required: true },
+  owner: { type: String, required: true }
+});
+
+exports.default = _mongoose2.default.model('Pin', Pin);
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.authConfig = undefined;
+
+var _User = __webpack_require__(19);
+
+var _User2 = _interopRequireDefault(_User);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var GitHubStrategy = __webpack_require__(20).Strategy;
+var TwitterStrategy = __webpack_require__(21).Strategy;
+var authConfig = exports.authConfig = function authConfig(passport) {
+  passport.serializeUser(function (user, done) {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser(function (id, done) {
+    _User2.default.findById(id, function (err, user) {
+      done(err, user);
+    });
+  });
+
+  passport.use(new TwitterStrategy({
+    consumerKey: process.env.TWITTER_CONSUMER_KEY,
+    consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
+    callbackURL: process.env.APP_URL + '/auth/twitter/callback/'
+  }, function (token, tokenSecret, profile, cb) {
+    process.nextTick(function () {
+      _User2.default.findOne({
+        'twitter.id': profile.id
+      }, function (err, user) {
+        if (err) {
+          return cb(err);
+        }
+        if (user) {
+          return cb(null, user);
+        } else {
+          var newUser = new _User2.default();
+
+          newUser.twitter.id = profile.id;
+          newUser.twitter.username = profile.username;
+          newUser.twitter.displayName = profile.displayName;
+
+          newUser.save(function (err) {
+            if (err) {
+              throw err;
+            }
+            return cb(null, newUser);
+          });
+        }
+      });
+    });
+  }));
+
+  passport.use(new GitHubStrategy({
+    clientID: process.env.GITHUB_KEY,
+    clientSecret: process.env.GITHUB_SECRET,
+    callbackURL: process.env.APP_URL + '/auth/github/callback/'
+  }, function (token, refreshToken, profile, done) {
+    process.nextTick(function () {
+      _User2.default.findOne({
+        'github.id': profile.id
+      }, function (err, user) {
+        if (err) {
+          return done(err);
+        }
+        if (user) {
+          return done(null, user);
+        } else {
+          var newUser = new _User2.default();
+
+          newUser.github.id = profile.id;
+          newUser.github.username = profile.username;
+          newUser.github.displayName = profile.displayName;
+
+          newUser.save(function (err) {
+            if (err) {
+              throw err;
+            }
+            return done(null, newUser);
+          });
+        }
+      });
+    });
+  }));
+};
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var mongoose = __webpack_require__(1);
+var Schema = mongoose.Schema;
+
+var User = new Schema({
+  github: {
+    id: String,
+    displayName: String,
+    username: String,
+    created: {
+      type: Date,
+      required: true,
+      default: new Date(),
+      expires: '365d'
+    }
+  },
+  twitter: {
+    id: String,
+    displayName: String,
+    username: String,
+    created: {
+      type: Date,
+      required: true,
+      default: new Date(),
+      expires: '365d'
+    }
+  }
+});
+
+exports.default = mongoose.model('User', User);
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports) {
+
+module.exports = require("passport-github2");
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports) {
+
+module.exports = require("passport-twitter");
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports) {
+
+module.exports = require("http");
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports) {
+
+module.exports = require("socket.io");
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*** ENVIRONMENT ***/
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _dotenv = __webpack_require__(0);
+
+var _dotenv2 = _interopRequireDefault(_dotenv);
+
+var _pinControllerServer = __webpack_require__(3);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var path = process.cwd();
+
+_dotenv2.default.load();
+
+/*** DEVELOPMENT TOOLS ***/
+var DEV = "development" === 'development';
+
+/*** CONTROLLER ***/
+
+
+/*** Web Socket Events ***/
+var ioEvents = function ioEvents(io) {
+  io.on('connection', function (serverSocket) {
+    if (DEV) {
+      console.log('Web Sockets connected.');
+    }
+    //Callback 1
+    serverSocket.emit('start', 'Regular communications received...');
+
+    //Callback 2
+    serverSocket.on('start', function (received) {
+      setInterval(function () {
+        (0, _pinControllerServer.updateAllPins)(serverSocket, 'updateAllPins');
+      }, received);
+    });
+
+    io.on('disconnect', function () {
+      console.log('Web Sockets disconnected.');
+    });
+  });
+};
+
+exports.default = ioEvents;
+
+/***/ })
+/******/ ]);
+//# sourceMappingURL=server.bundle.js.map
