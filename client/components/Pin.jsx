@@ -1,5 +1,12 @@
 'use strict'
 
+/*** ENVIRONMENT ***/
+import dotenv from 'dotenv'
+dotenv.load()
+
+/*** DEVELOPMENT TOOLS ***/
+const DEV = process.env.NODE_ENV === 'development'
+
 /*** COMPONENTS ***/
 //React
 import React, { Component } from 'react'
@@ -45,7 +52,9 @@ export default class Pin extends Component {
     }
     const data = encodeURIComponent(JSON.stringify(obj))
     f('DELETE', '/api/deletePin/' + data, response => {
-      //console.log(response)
+      if (DEV) {
+        console.log(response)
+      }
       this.handleClose()
     })
   }
@@ -65,7 +74,9 @@ export default class Pin extends Component {
     }
     const data = encodeURIComponent(JSON.stringify(obj))
     f('POST', 'api/toggleLikePin/' + data, response => {
-      //console.log(response)
+      if (DEV) {
+        console.log(response)
+      }
     })
   }
   render() {
@@ -75,6 +86,8 @@ export default class Pin extends Component {
     const url = isURL(img, options)
     return (
       <Card raised style={{ margin: 5 }}>
+        {/* Card displays preview image and details, which trigger a
+          * large image Modal and details onClick */}
         <Modal
           closeIcon
           onClose={this.handleClose}
@@ -91,6 +104,7 @@ export default class Pin extends Component {
             />
           }
         >
+          {/* Large image that appears onClick */}
           <Image
             alt={title}
             centered
