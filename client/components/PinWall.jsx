@@ -16,7 +16,7 @@ import Pin from './Pin.jsx'
 /*** MAIN ***/
 const PinWall = ({ wallPins, logged, loggedUser }) => {
   const masonryOptions = {
-    transitionDuration: 500
+    transitionDuration: 250
   }
   const show = wallPins.map((item, index) => {
     //Check to see if the loggedUser liked the Pin already
@@ -36,20 +36,8 @@ const PinWall = ({ wallPins, logged, loggedUser }) => {
     )
   })
   return (
-    <Container
-      style={{
-        width: '74vw',
-        marginBottom: '15vh'
-      }}
-    >
-      <Masonry
-        style={{
-          marginTop: 80
-        }}
-        options={masonryOptions}
-      >
-        {show}
-      </Masonry>
+    <Container fluid className="pinWall">
+      <Masonry options={masonryOptions}>{show}</Masonry>
     </Container>
   )
 }
