@@ -15,18 +15,40 @@ import { f } from '../../common/common.functions.js'
 export default class Like extends Component {
   constructor(props) {
     super(props)
-    const { loggedUserLike } = this.props
+    const { likes, loggedUserLike } = this.props
     this.state = {
-      /*empty and full are used for the Like/Unlike animation - directly  *
-       *checking this.props.loggedUserLike in <Transition/> doesn't work  */
+      /* empty and full are used for the Like/Unlike animation - directly
+       * checking this.props.loggedUserLike in <Transition/> doesn't work */
       empty: !loggedUserLike,
-      full: loggedUserLike
+      full: loggedUserLike,
+      likes: likes.length
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      empty: !nextProps.loggedUserLike,
+      full: nextProps.loggedUserLike,
+      likes: nextProps.likes.length
+    })
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState !== this.state || nextProps !== this.props) {
+      return true
+    } else {
+      return false
     }
   }
   toggleLikePin() {
     const { img, logged, loggedUser, owner, title } = this.props
     //Only logged users can Like a post
     if (logged) {
+      //Quick, client-only response
+      this.setState({
+        empty: !this.state.empty,
+        full: !this.state.full,
+        likes: this.state.full ? this.state.likes - 1 : this.state.likes + 1
+      })
+
       const obj = {
         img: img,
         loggedUser: loggedUser,
@@ -39,22 +61,13 @@ export default class Like extends Component {
       })
     }
   }
-  shouldComponentUpdate(nextProps, nextState) {
-    //Only update when loggedUserLike updates
-    if (this.props.loggedUserLike !== nextProps.loggedUserLike) {
-      return true
-    } else {
-      return false
-    }
-  }
   render() {
-    const { likes, loggedUserLike } = this.props
-    const { full, empty } = this.state
+    const { full, empty, likes } = this.state
 
     return (
       <span>
-        {loggedUserLike ? (
-          <Transition animation={'pulse'} duration={500} visible={full}>
+        <Transition animation="pulse" duration={500} visible={full}>
+          {full ? (
             <Icon
               link
               name="heart"
@@ -64,9 +77,7 @@ export default class Like extends Component {
                 this.toggleLikePin()
               }}
             />
-          </Transition>
-        ) : (
-          <Transition animation={'pulse'} duration={500} visible={empty}>
+          ) : (
             <Icon
               link
               name="empty heart"
@@ -75,9 +86,9 @@ export default class Like extends Component {
                 this.toggleLikePin()
               }}
             />
-          </Transition>
-        )}
-        {likes.length}
+          )}
+        </Transition>
+        {likes}
       </span>
     )
   }
