@@ -99,7 +99,7 @@ export default class Pin extends Component {
 
     //Large popup image and elements that display on card image click
     const picModal = (
-      <Modal onClose={() => this.handleClose()} open={modalOpen} size="tiny">
+      <Modal closeIcon onClose={() => this.handleClose()} open={modalOpen} size="tiny">
         <Image
           alt={title}
           centered

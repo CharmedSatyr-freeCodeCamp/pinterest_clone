@@ -104,6 +104,7 @@ export default class NewPin extends Component {
 
     const newPinModal = (
       <Modal
+        closeIcon
         onClose={() => {
           this.handleClose()
         }}
