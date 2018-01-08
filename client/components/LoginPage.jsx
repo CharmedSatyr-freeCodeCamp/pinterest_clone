@@ -6,7 +6,7 @@ import React, { Component } from 'react'
 
 //App
 import Footer from './Footer.jsx'
-import Loader from './Loader.jsx'
+import SorcererLoader from './SorcererLoader.jsx'
 import LoginBar from './LoginBar.jsx'
 import PinWall from './PinWall.jsx'
 
@@ -43,20 +43,10 @@ export default class LoginPage extends Component {
   render() {
     const { allPins, loading } = this.state
 
-    if (loading) {
-      return (
-        <div>
-          <LoginBar />
-          <Loader />
-          <Footer />
-        </div>
-      )
-    }
-
     return (
       <div>
         <LoginBar />
-        <PinWall logged={false} wallPins={allPins} />
+        {loading ? <SorcererLoader /> : <PinWall logged={false} wallPins={allPins} />}
         <Footer />
       </div>
     )

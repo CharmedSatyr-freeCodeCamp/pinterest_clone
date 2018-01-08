@@ -17,7 +17,7 @@ import React, { Component } from 'react'
 
 //App
 import Footer from './Footer.jsx'
-import Loader from './Loader.jsx'
+import SorcererLoader from './SorcererLoader.jsx'
 import LoginBar from './LoginBar.jsx'
 import NavBar from './NavBar.jsx'
 import PinWall from './PinWall.jsx'
@@ -80,9 +80,12 @@ export default class App extends Component {
     this.setState({ showAllPins: false, showLoggedUserPins: true })
   }
   componentDidMount() {
+    //Show SorcererLoader until component mounts
+    //  this.setState({ loading: false })
     //Briefly show loader while images continue to load
     setTimeout(() => this.setState({ loading: false }), 1000)
   }
+
   componentWillMount() {
     this.loggedUser()
   }
@@ -97,7 +100,7 @@ export default class App extends Component {
       return (
         <div>
           <LoginBar />
-          <Loader />
+          <SorcererLoader />
           <Footer />
         </div>
       )

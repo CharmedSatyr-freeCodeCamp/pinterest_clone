@@ -12,7 +12,7 @@ const DEV = process.env.NODE_ENV === 'development'
 import React, { Component } from 'react'
 
 //Semantic UI React
-import { Button, Card, Image, Modal, Transition } from 'semantic-ui-react'
+import { Button, Card, Dimmer, Image, Loader, Modal, Transition } from 'semantic-ui-react'
 
 //App
 import Like from './Like.jsx'
@@ -32,7 +32,7 @@ import dummy from '../img/image.png'
 export default class Pin extends Component {
   constructor(props) {
     super(props)
-    this.state = { modalOpen: false, visible: false }
+    this.state = { loading: true, modalOpen: false, visible: false }
     this.addDefaultSrc = this.addDefaultSrc.bind(this)
     this.deletePin = this.deletePin.bind(this)
     this.handleClose = this.handleClose.bind(this)
@@ -42,6 +42,12 @@ export default class Pin extends Component {
   //Broken image fix on error
   addDefaultSrc(e) {
     e.target.src = dummy
+  }
+  componentDidMount() {
+    //Remove loader when component mounts
+    //this.setState({ loading: false })
+    //Keep loader over images a bit after component mounts to smooth transition
+    setTimeout(() => this.setState({ loading: false }), 400)
   }
   deletePin() {
     const { title, img, loggedUser } = this.props
@@ -86,7 +92,7 @@ export default class Pin extends Component {
   }
   render() {
     const { img, likes, logged, loggedUser, loggedUserLike, owner, title } = this.props
-    const { modalOpen, visible } = this.state
+    const { loading, modalOpen, visible } = this.state
     //URL is validated by validator package. Must be HTTPS protocol.
     const options = { protocols: ['https'], require_protocol: true }
     const url = isURL(img, options)
@@ -132,16 +138,21 @@ export default class Pin extends Component {
         </Modal.Content>
       </Modal>
     )
-
     return (
       /* Card displays preview image and details, which trigger a
         * Transition to a large image Modal and details onClick */
       <Card raised style={{ margin: 5 }}>
+        {loading ? (
+          <Dimmer active>
+            <Loader />
+          </Dimmer>
+        ) : null}
         <Image
           alt={title}
           onClick={() => this.handleOpen()}
           onError={this.addDefaultSrc}
           src={url ? img : dummy}
+          title={title}
         />
         <Transition visible={visible} animation="scale" duration={250}>
           {picModal}
