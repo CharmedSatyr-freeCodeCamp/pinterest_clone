@@ -147,7 +147,7 @@ export default class Pin extends Component {
           onError={this.addDefaultSrc}
           src={url ? img : dummy}
         />
-        <Transition visible={visible} animation="horizontal flip" duration={300}>
+        <Transition visible={visible} animation="scale" duration={300}>
           {picModal}
         </Transition>
         <Card.Content extra>
