@@ -5,7 +5,7 @@
 import React, { Component } from 'react'
 
 //Semantic UI React
-import { Button, Header, Image, Input, Modal } from 'semantic-ui-react'
+import { Button, Header, Image, Input, Modal, Transition } from 'semantic-ui-react'
 
 /*** Image ***/
 //Dummy Image
@@ -24,19 +24,24 @@ export default class NewPin extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      error: '',
+      image: dummy,
       modalOpen: false,
       title: 'Add a Title!',
-      image: dummy,
-      error: ''
+      visible: false
     }
     this.handleClose = this.handleClose.bind(this)
+    this.handleImg = this.handleImg.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleTitle = this.handleTitle.bind(this)
-    this.handleImg = this.handleImg.bind(this)
   }
   handleClose() {
-    this.setState({ image: dummy, modalOpen: false, title: 'Add a Title!' })
+    //Toggle visibility to trigger animation
+    this.setState({ image: dummy, title: 'Add a Title!', visible: false })
+    //close Modal - this will NOT work if chained to setState like in handleOpen
+    //Interval on setTimeout === Transition animation length
+    setTimeout(() => this.setState({ modalOpen: false }), 250)
   }
   handleImg() {
     const image = document.getElementById('pinImg').value
@@ -52,7 +57,8 @@ export default class NewPin extends Component {
     }
   }
   handleOpen() {
-    this.setState({ modalOpen: true })
+    //Open Modal and then toggle visilibility to trigger animation
+    this.setState({ modalOpen: true }, () => this.setState({ visible: true }))
   }
   handleSubmit() {
     if (this.handleImg()) {
@@ -94,32 +100,23 @@ export default class NewPin extends Component {
     }
   }
   render() {
-    return (
+    const { error, image, modalOpen, title, visible } = this.state
+
+    const newPinModal = (
       <Modal
-        closeIcon
         onClose={() => {
           this.handleClose()
         }}
-        open={this.state.modalOpen}
+        open={modalOpen}
         size="mini"
-        trigger={
-          <Button
-            color="blue"
-            content="New Card"
-            onClick={() => {
-              this.handleOpen()
-            }}
-            icon="plus"
-          />
-        }
       >
         <Modal.Header>New Card</Modal.Header>
         <Modal.Content>
           <div className="newpin">
             <Header as="h1" textAlign="center">
-              {this.state.title}
+              {title}
             </Header>
-            <Image alt={this.state.title} src={this.state.image} />
+            <Image alt={title} src={image} />
             <br />
             <Input id="pinTitle" placeholder="Enter a short title" onChange={this.handleTitle} />
             <br />
@@ -129,20 +126,24 @@ export default class NewPin extends Component {
               onChange={this.handleImg}
             />
             <div style={{ color: 'red', textAlign: 'center', margin: 7 }}>
-              <strong>{this.state.error}</strong>
+              <strong>{error}</strong>
             </div>
             <br />
-            <Button
-              color="blue"
-              onClick={() => {
-                this.handleSubmit()
-              }}
-            >
+            <Button color="blue" onClick={() => this.handleSubmit()}>
               Submit
             </Button>
           </div>
         </Modal.Content>
       </Modal>
+    )
+
+    return (
+      <span>
+        <Button color="blue" content="New Card" onClick={() => this.handleOpen()} icon="plus" />
+        <Transition visible={visible} animation="scale" duration={250}>
+          {newPinModal}
+        </Transition>
+      </span>
     )
   }
 }

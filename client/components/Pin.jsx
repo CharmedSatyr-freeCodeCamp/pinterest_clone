@@ -63,7 +63,7 @@ export default class Pin extends Component {
     this.setState({ visible: false })
     //close Modal - this will NOT work if chained to setState like in handleOpen
     //Interval on setTimeout === Transition animation length
-    setTimeout(() => this.setState({ modalOpen: false }), 300)
+    setTimeout(() => this.setState({ modalOpen: false }), 250)
   }
   handleOpen() {
     //Open Modal and then toggle visilibility to trigger animation
@@ -93,7 +93,7 @@ export default class Pin extends Component {
 
     //Large popup image and elements that display on card image click
     const picModal = (
-      <Modal closeIcon onClose={() => this.handleClose()} open={modalOpen} size="tiny">
+      <Modal onClose={() => this.handleClose()} open={modalOpen} size="tiny">
         <Image
           alt={title}
           centered
@@ -107,9 +107,7 @@ export default class Pin extends Component {
           {loggedUser === owner ? (
             <Button
               floated="right"
-              onClick={() => {
-                this.deletePin()
-              }}
+              onClick={() => this.deletePin()}
               negative
               style={{ marginTop: -5 }}
             >
@@ -141,13 +139,11 @@ export default class Pin extends Component {
       <Card raised style={{ margin: 5 }}>
         <Image
           alt={title}
-          onClick={() => {
-            this.handleOpen()
-          }}
+          onClick={() => this.handleOpen()}
           onError={this.addDefaultSrc}
           src={url ? img : dummy}
         />
-        <Transition visible={visible} animation="scale" duration={300}>
+        <Transition visible={visible} animation="scale" duration={250}>
           {picModal}
         </Transition>
         <Card.Content extra>
