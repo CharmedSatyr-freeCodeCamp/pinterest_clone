@@ -32,7 +32,7 @@ import dummy from '../img/image.png'
 export default class Pin extends Component {
   constructor(props) {
     super(props)
-    this.state = { modalOpen: false }
+    this.state = { modalOpen: false, visible: false }
     this.addDefaultSrc = this.addDefaultSrc.bind(this)
     this.deletePin = this.deletePin.bind(this)
     this.handleClose = this.handleClose.bind(this)
@@ -59,10 +59,15 @@ export default class Pin extends Component {
     })
   }
   handleClose() {
-    this.setState({ modalOpen: false })
+    //Toggle visibility to trigger animation
+    this.setState({ visible: false })
+    //close Modal - this will NOT work if chained to setState like in handleOpen
+    //Interval on setTimeout === Transition animation length
+    setTimeout(() => this.setState({ modalOpen: false }), 300)
   }
   handleOpen() {
-    this.setState({ modalOpen: true })
+    //Open Modal and then toggle visilibility to trigger animation
+    this.setState({ modalOpen: true }, () => this.setState({ visible: true }))
   }
   toggleLikePin() {
     const { img, loggedUser, owner, title } = this.props
@@ -81,69 +86,70 @@ export default class Pin extends Component {
   }
   render() {
     const { img, likes, logged, loggedUser, loggedUserLike, owner, title } = this.props
+    const { modalOpen, visible } = this.state
     //URL is validated by validator package. Must be HTTPS protocol.
     const options = { protocols: ['https'], require_protocol: true }
     const url = isURL(img, options)
-    return (
-      <Card raised style={{ margin: 5 }}>
-        {/* Card displays preview image and details, which trigger a
-          * large image Modal and details onClick */}
-        <Modal
-          closeIcon
-          onClose={this.handleClose}
-          open={this.state.modalOpen}
-          size="small"
-          trigger={
-            <Image
-              alt={title}
+
+    //Large popup image and elements that display on card image click
+    const picModal = (
+      <Modal closeIcon onClose={() => this.handleClose()} open={modalOpen} size="tiny">
+        <Image
+          alt={title}
+          centered
+          onError={this.addDefaultSrc}
+          src={url ? img : dummy}
+          style={{ width: '100%' }}
+        />
+        <Modal.Header>
+          {title}
+          {/* Only show the Remove button to the pin's owner */}
+          {loggedUser === owner ? (
+            <Button
+              floated="right"
               onClick={() => {
-                this.handleOpen()
+                this.deletePin()
               }}
-              onError={this.addDefaultSrc}
-              src={url ? img : dummy}
+              negative
+              style={{ marginTop: -5 }}
+            >
+              Delete Card
+            </Button>
+          ) : null}
+        </Modal.Header>
+        <Modal.Content image>
+          <Modal.Description>
+            {/* Like button */}
+            <Like
+              img={img}
+              likes={likes}
+              logged={logged}
+              loggedUser={loggedUser}
+              loggedUserLike={loggedUserLike}
+              owner={owner}
+              title={title}
             />
-          }
-        >
-          {/* Large image that appears onClick */}
-          <Image
-            alt={title}
-            centered
-            onError={this.addDefaultSrc}
-            src={url ? img : dummy}
-            style={{ width: '100%' }}
-          />
-          <Modal.Header>
-            {title}
-            {/* Only show the Remove button to the pin's owner */}
-            {loggedUser === owner ? (
-              <Button
-                floated="right"
-                onClick={() => {
-                  this.deletePin()
-                }}
-                negative
-                style={{ marginTop: -5 }}
-              >
-                Delete Card
-              </Button>
-            ) : null}
-          </Modal.Header>
-          <Modal.Content image>
-            <Modal.Description>
-              {/* Like button */}
-              <Like
-                img={img}
-                likes={likes}
-                logged={logged}
-                loggedUser={loggedUser}
-                loggedUserLike={loggedUserLike}
-                owner={owner}
-                title={title}
-              />
-              <span style={{ float: 'right' }}>{owner}</span>
-            </Modal.Description>
-          </Modal.Content>
-        </Modal>
+            <span style={{ float: 'right' }}>{owner}</span>
+          </Modal.Description>
+        </Modal.Content>
+      </Modal>
+    )
+
+    return (
+      /* Card displays preview image and details, which trigger a
+        * Transition to a large image Modal and details onClick */
+      <Card raised style={{ margin: 5 }}>
+        <Image
+          alt={title}
+          onClick={() => {
+            this.handleOpen()
+          }}
+          onError={this.addDefaultSrc}
+          src={url ? img : dummy}
+        />
+        <Transition visible={visible} animation="horizontal flip" duration={300}>
+          {picModal}
+        </Transition>
         <Card.Content extra>
           <Card.Header textAlign="center">{title}</Card.Header>
           {/* Like button */}
