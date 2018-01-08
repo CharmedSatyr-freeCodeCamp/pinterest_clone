@@ -32,6 +32,7 @@ export default class LoginPage extends Component {
     //Get current allPins, but no autoupdate like in App.jsx
     f('GET', '/api/allPins', response => {
       this.setState({ allPins: response }, () => {
+        //Not sure whether it's better to use this here or in componentDidMount
         setTimeout(() => this.setState({ loading: false }), 2000)
       })
     })
