@@ -7,6 +7,20 @@ Swirling background inspired by CSS3 Loaders #4
 https://codepen.io/Siddharth11/pen/xbGrpG
 
 */
+//The predim effect mimics the Dimmer effect in the React elements
+.predim {
+  background: transparent;
+  background: rgba(0,0,0, 0.85);
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  z-index: -1;
+}
+
 .loader {
   //Circular frame
   .circ {
