@@ -37,12 +37,15 @@ const SorcererLoader = () => {
             </div>
           </div>
           <div className="body">
-            <div className="hands" />
+            <div className="hands">
+              <div className="sleeveFold" />
+            </div>
           </div>
           <div className="head">
             <div className="eye" />
             <div className="nose" />
             <div className="cheeks" />
+            <div className="lip" />
             <div className="beard" />
           </div>
         </div>
