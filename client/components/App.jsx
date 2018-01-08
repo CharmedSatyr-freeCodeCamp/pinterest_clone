@@ -17,6 +17,8 @@ import React, { Component } from 'react'
 
 //App
 import Footer from './Footer.jsx'
+import Loader from './Loader.jsx'
+import LoginBar from './LoginBar.jsx'
 import NavBar from './NavBar.jsx'
 import PinWall from './PinWall.jsx'
 
@@ -29,6 +31,7 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      loading: true,
       logged: true,
       loggedUser: 'Client',
       allPins: [],
@@ -76,18 +79,30 @@ export default class App extends Component {
   showLoggedUserPins() {
     this.setState({ showAllPins: false, showLoggedUserPins: true })
   }
+  componentDidMount() {
+    //Briefly show loader while images continue to load
+    setTimeout(() => this.setState({ loading: false }), 1000)
+  }
   componentWillMount() {
-    if (DEV) {
-      console.log('Will mount App...')
-    }
     this.loggedUser()
   }
   render() {
-    const { allPins, logged, loggedUser, showLoggedUserPins } = this.state
+    const { allPins, logged, loading, loggedUser, showLoggedUserPins } = this.state
     //Filter allPins for those made by the loggedUser
     const loggedUserPins = allPins.filter(item => {
       return item.owner === loggedUser
     })
+
+    if (loading) {
+      return (
+        <div>
+          <LoginBar />
+          <Loader />
+          <Footer />
+        </div>
+      )
+    }
+
     return (
       <div>
         <header>

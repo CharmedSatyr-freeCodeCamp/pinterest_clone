@@ -6,6 +6,7 @@ import React, { Component } from 'react'
 
 //App
 import Footer from './Footer.jsx'
+import Loader from './Loader.jsx'
 import LoginBar from './LoginBar.jsx'
 import PinWall from './PinWall.jsx'
 
@@ -24,8 +25,7 @@ export default class LoginPage extends Component {
     /* Wizard loader shows in HTML/CSS before React has rendered or if JS is
      * disabled. This function artificially extends page load time to
      * allow more user-generated images to fully load.
-     * Also, the wizard loader is cool and users should see it...
-     * Login.html prefetches main app scripts to avoid this in App.jsx */
+     * Also, the wizard loader is cool and users should see it... */
     setTimeout(() => this.setState({ loading: false }), 1500)
   }
   componentWillMount() {
@@ -43,42 +43,12 @@ export default class LoginPage extends Component {
   render() {
     const { allPins, loading } = this.state
 
-    //This loader html is the same as in login.html and index.html
     if (loading) {
       return (
-        <div className="loader">
-          <div className="circ">
-            <div className="swirl">
-              <div>
-                <div>
-                  <div>
-                    <div>
-                      <div>
-                        <div>
-                          <div>
-                            <div>
-                              <div>
-                                <div />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="body">
-              <div className="hands" />
-            </div>
-            <div className="head">
-              <div className="eye" />
-              <div className="nose" />
-              <div className="cheeks" />
-              <div className="beard" />
-            </div>
-          </div>
+        <div>
+          <LoginBar />
+          <Loader />
+          <Footer />
         </div>
       )
     }
