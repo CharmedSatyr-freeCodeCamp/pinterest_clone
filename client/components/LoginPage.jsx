@@ -37,6 +37,13 @@ export default class LoginPage extends Component {
       })
     })
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState !== this.state || nextProps !== this.props) {
+      return true
+    } else {
+      return false
+    }
+  }
   showLogin() {
     this.setState({ showLogin: true })
   }

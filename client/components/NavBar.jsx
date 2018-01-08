@@ -31,6 +31,13 @@ export default class NavBar extends Component {
     this.setState({ activeItem: 'showAllPins' })
     this.props.showAllPins()
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState !== this.state || nextProps !== this.props) {
+      return true
+    } else {
+      return false
+    }
+  }
   render() {
     const { activeItem } = this.state
     const { loggedUser } = this.props

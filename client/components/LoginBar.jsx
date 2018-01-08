@@ -29,6 +29,13 @@ export default class LoginBar extends Component {
     //Open Modal and then toggle visilibility to trigger animation
     this.setState({ modalOpen: true }, () => this.setState({ visible: true }))
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState !== this.state || nextProps !== this.props) {
+      return true
+    } else {
+      return false
+    }
+  }
   render() {
     const { modalOpen, visible } = this.state
 

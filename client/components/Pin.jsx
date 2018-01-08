@@ -75,6 +75,13 @@ export default class Pin extends Component {
     //Open Modal and then toggle visilibility to trigger animation
     this.setState({ modalOpen: true }, () => this.setState({ visible: true }))
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState !== this.state || nextProps !== this.props) {
+      return true
+    } else {
+      return false
+    }
+  }
   toggleLikePin() {
     const { img, loggedUser, owner, title } = this.props
     const obj = {
