@@ -68,8 +68,8 @@ export default class NewPin extends Component {
         this.setState({ error: '' })
       })
     } else {
-      //Prompt user for HTTPS link on failed submission.
-      const text = 'Make sure your link starts with "https"!'
+      //Prompt user for valid HTTPS link on failed submission.
+      const text = 'Use a valid link that starts with HTTPS'
       this.setState({
         error: text
       })
