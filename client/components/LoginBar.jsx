@@ -34,7 +34,13 @@ export default class LoginBar extends Component {
 
     const loginModal = (
       <Modal closeIcon onClose={() => this.handleClose()} open={modalOpen} size="mini">
-        <Image alt="Satyr logo" centered height="75px" src={satyr} style={{ marginTop: 12 }} />
+        <Image
+          alt="Satyr logo"
+          centered
+          height="75px"
+          src={satyr}
+          style={{ marginTop: 13, marginBottom: -2 }}
+        />
         <Modal.Header>
           <Header textAlign="center" className="fantasyFont">
             Welcome to Sorcerer City
