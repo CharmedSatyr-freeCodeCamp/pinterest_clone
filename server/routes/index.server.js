@@ -58,14 +58,6 @@ export const routes = (app, passport) => {
     }
   }
 
-  /*
-  //Allows session's name_view to be accessed by controllers
-  app.use((req, res, next) => {
-    res.locals.name_view = name_view
-    next()
-  })
-  */
-
   //Root view - developers don't have to log in to see the App
   if (PROD) {
     app.route('/').get(permissions, root)
@@ -109,7 +101,7 @@ export const routes = (app, passport) => {
         res.json(name_view)
       } else {
         console.log('name_view ERROR')
-        res.json('Stranger')
+        res.json('Stranger') //This can be set to whatever is needed-- e.g., a troll's username--to delete awkward submissions manually
       }
     }
   )
@@ -136,8 +128,10 @@ export const routes = (app, passport) => {
   app.route('/api/toggleLikePin/:data').post(/*permissions,*/ toggleLikePin)
 
   /*** DEBUGGING - No UI ***/
-  //Delete all pins
   if (DEV) {
-    app.use('/api/unpinAll', unpinAll)
+    //Delete all pins
+    if (DEV) {
+      app.use('/api/unpinAll', unpinAll)
+    }
   }
 }
