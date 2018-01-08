@@ -21,7 +21,8 @@ export default class Like extends Component {
        * checking this.props.loggedUserLike in <Transition/> doesn't work */
       empty: !loggedUserLike,
       full: loggedUserLike,
-      likes: likes.length
+      likes: likes.length,
+      pulse: true
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -46,7 +47,8 @@ export default class Like extends Component {
       this.setState({
         empty: !this.state.empty,
         full: !this.state.full,
-        likes: this.state.full ? this.state.likes - 1 : this.state.likes + 1
+        likes: this.state.full ? this.state.likes - 1 : this.state.likes + 1,
+        pulse: !this.state.pulse
       })
 
       const obj = {
@@ -62,31 +64,20 @@ export default class Like extends Component {
     }
   }
   render() {
-    const { full, empty, likes } = this.state
+    const { full, empty, likes, pulse } = this.state
 
     return (
       <span>
-        <Transition animation="pulse" duration={500} visible={full}>
-          {full ? (
-            <Icon
-              link
-              name="heart"
-              size="large"
-              color="red"
-              onClick={() => {
-                this.toggleLikePin()
-              }}
-            />
-          ) : (
-            <Icon
-              link
-              name="empty heart"
-              size="large"
-              onClick={() => {
-                this.toggleLikePin()
-              }}
-            />
-          )}
+        <Transition animation="pulse" duration={500} visible={pulse}>
+          <Icon
+            link
+            name={full ? 'heart' : 'empty heart'}
+            size="large"
+            color={full ? 'red' : 'grey'}
+            onClick={() => {
+              this.toggleLikePin()
+            }}
+          />
         </Transition>
         {likes}
       </span>
