@@ -23,3 +23,15 @@ https://www.freecodecamp.org/challenges/build-a-pinterest-clone
 5. **User Story:** As an unauthenticated user, I can browse other users' walls of images.
 
 6. **User Story:** As an authenticated user, if I upload an image that is broken, it will be replaced by a placeholder image. (can use jQuery broken image detection)
+
+***
+
+### Feature Wish List
+
+1. Search/view Cards by User
+
+2. Local login
+
+3. Re-pin/boost/retweet others' Cards
+
+4. More comprehensive moderation tools
