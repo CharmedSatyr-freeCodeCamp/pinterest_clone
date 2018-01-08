@@ -18,7 +18,7 @@ const Footer = () => {
           rel="noopener"
           target="_blank"
         >
-          Designed and built by &nbsp;<Icon fitted name="github" /> CharmedSatyr
+          Designed and coded by &nbsp;<Icon fitted name="github" /> CharmedSatyr
         </Menu.Item>
         <Menu.Item
           as="a"
@@ -26,7 +26,7 @@ const Footer = () => {
           rel="noopener"
           target="_blank"
         >
-          Code licensed under GPL-3.0
+          GNU General Public License v3.0
         </Menu.Item>
       </Container>
     </Menu>
