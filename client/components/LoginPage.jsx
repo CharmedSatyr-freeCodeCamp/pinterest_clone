@@ -26,7 +26,7 @@ export default class LoginPage extends Component {
      * disabled. This function artificially extends page load time to
      * allow more user-generated images to fully load.
      * Also, the wizard loader is cool and users should see it... */
-    setTimeout(() => this.setState({ loading: false }), 1500)
+    setTimeout(() => this.setState({ loading: false }), 2000)
   }
   componentWillMount() {
     //Get current allPins, but no autoupdate like in App.jsx
