@@ -73,6 +73,13 @@ export default class App extends Component {
       this.start(response)
     })
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState !== this.state) {
+      return true
+    } else {
+      return false
+    }
+  }
   showAllPins() {
     this.setState({ showAllPins: true, showLoggedUserPins: false })
   }
