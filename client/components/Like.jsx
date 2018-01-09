@@ -78,6 +78,7 @@ export default class Like extends Component {
     }
   }
   render() {
+    const { logged } = this.props
     const { full, empty, likes, noClick, pulse } = this.state
 
     return (
@@ -87,6 +88,7 @@ export default class Like extends Component {
             link
             name={full ? 'heart' : 'empty heart'}
             size="large"
+            className={logged ? null : 'noLike'}
             color={full ? 'red' : 'grey'}
             onClick={() => {
               if (!noClick) {

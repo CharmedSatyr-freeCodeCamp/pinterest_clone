@@ -36,3 +36,7 @@ body {
   transition: box-shadow 0s linear, transform 0s linear;
   transition: box-shadow 0s linear, transform 0s linear, -webkit-transform 0s linear;
 }
+
+.noLike:hover {
+  cursor: not-allowed !important;
+}
