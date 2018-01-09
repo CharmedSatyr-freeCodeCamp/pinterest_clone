@@ -88,19 +88,21 @@ export const routes = (app, passport) => {
   )
 
   //Client-side API path to GET name_view
-  app.route('/api/users/logged').get(permissions, (req, res) => {
-    if (DEV) {
-      console.log('Client requesting username...')
-    }
-    if (name_view) {
+  app.route('/api/users/logged').get(
+    /* permissions, */ (req, res) => {
       if (DEV) {
-        console.log('Sending username', name_view)
+        console.log('Client requesting username...')
       }
-      res.json(name_view)
-    } else {
-      res.redirect('/login')
+      if (name_view) {
+        if (DEV) {
+          console.log('Sending username', name_view)
+        }
+        res.json(name_view)
+      } else {
+        res.redirect('/login')
+      }
     }
-  })
+  )
 
   //Passport logout
   app.route('/logout').get((req, res) => {
@@ -109,16 +111,16 @@ export const routes = (app, passport) => {
   })
 
   //Save new pin
-  app.route('/api/savePin/:data').post(permissions, savePin)
+  app.route('/api/savePin/:data').post(/* permissions, */ savePin)
 
   //Delete pin
-  app.route('/api/deletePin/:data').delete(permissions, deletePin)
+  app.route('/api/deletePin/:data').delete(/* permissions, */ deletePin)
 
   //All pins
   app.route('/api/allPins').get(allPins)
 
   //Like or unlike a pin
-  app.route('/api/toggleLikePin/:data').post(permissions, toggleLikePin)
+  app.route('/api/toggleLikePin/:data').post(/* permissions, */ toggleLikePin)
 
   /*** DEBUGGING - No UI ***/
   if (DEV) {
