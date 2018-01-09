@@ -37,6 +37,10 @@ body {
   transition: box-shadow 0s linear, transform 0s linear, -webkit-transform 0s linear;
 }
 
+.magnify {
+  cursor: zoom-in;
+}
+
 .noLike:hover {
   cursor: not-allowed !important;
 }

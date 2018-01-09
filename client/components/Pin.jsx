@@ -156,6 +156,7 @@ export default class Pin extends Component {
         ) : null}
         <Image
           alt={title}
+          className="magnify"
           onClick={() => this.handleOpen()}
           onError={this.addDefaultSrc}
           src={url ? img : dummy}
