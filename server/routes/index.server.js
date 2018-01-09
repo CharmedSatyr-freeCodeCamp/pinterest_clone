@@ -5,7 +5,6 @@ const path = process.cwd()
 import dotenv from 'dotenv'
 dotenv.load()
 
-/*** DEVELOPMENT TOOLS ***/
 const DEV = process.env.NODE_ENV === 'development'
 const PROD = process.env.NODE_ENV === 'production'
 
@@ -41,7 +40,7 @@ export const routes = (app, passport) => {
   const permissions = (req, res, next) => {
     if (req.isAuthenticated()) {
       if (DEV) {
-        console.log('AUTHORIZATION SUCCESSFUL')
+        console.log('AUTHORIZATION SUCCESSFUL:', req.user) //This will only be available if proper URI is set with auth provider (Twitter or GitHub)
       }
       if (req.user.github.username) {
         name_view = req.user.github.username
@@ -50,20 +49,18 @@ export const routes = (app, passport) => {
       }
       console.log('USER:', name_view)
       return next()
+    } else if (DEV) {
+      //Developers pass permissions checks
+      name_view = 'Stranger' //This can be set to whatever is needed-- e.g., a troll's username--to delete awkward submissions manually
+      console.log('DEVELOPER:', name_view)
+      return next()
     } else {
-      if (DEV) {
-        console.log('USER NOT AUTHORIZED')
-      }
       res.redirect('/login')
     }
   }
 
-  //Root view - developers don't have to log in to see the App
-  if (PROD) {
-    app.route('/').get(permissions, root)
-  } else if (DEV) {
-    app.route('/').get(root)
-  }
+  //Root view
+  app.route('/').get(permissions, root)
 
   //Login view
   app.route('/login').get(login)
@@ -91,21 +88,19 @@ export const routes = (app, passport) => {
   )
 
   //Client-side API path to GET name_view
-  //Unclear why this won't work with a permissions check
-  app.route('/api/users/logged').get(
-    /*permissions,*/ (req, res) => {
-      if (DEV) {
-        console.log('Client requesting username...')
-      }
-      if (name_view) {
-        res.json(name_view)
-      } else if (DEV) {
-        res.json('Stranger') //This can be set to whatever is needed-- e.g., a troll's username--to delete awkward submissions manually
-      } else {
-        res.json('Something is wrong...')
-      }
+  app.route('/api/users/logged').get(permissions, (req, res) => {
+    if (DEV) {
+      console.log('Client requesting username...')
     }
-  )
+    if (name_view) {
+      if (DEV) {
+        console.log('Sending username', name_view)
+      }
+      res.json(name_view)
+    } else {
+      res.redirect('/login')
+    }
+  })
 
   //Passport logout
   app.route('/logout').get((req, res) => {
@@ -114,19 +109,16 @@ export const routes = (app, passport) => {
   })
 
   //Save new pin
-  //Unclear why this won't work with a permissions check
-  app.route('/api/savePin/:data').post(/*permissions,*/ savePin)
+  app.route('/api/savePin/:data').post(permissions, savePin)
 
   //Delete pin
-  //Unclear why this won't work with a permissions check
-  app.route('/api/deletePin/:data').delete(/*permissions,*/ deletePin)
+  app.route('/api/deletePin/:data').delete(permissions, deletePin)
 
   //All pins
   app.route('/api/allPins').get(allPins)
 
   //Like or unlike a pin
-  //Unclear why this won't work with a permissions check
-  app.route('/api/toggleLikePin/:data').post(/*permissions,*/ toggleLikePin)
+  app.route('/api/toggleLikePin/:data').post(permissions, toggleLikePin)
 
   /*** DEBUGGING - No UI ***/
   if (DEV) {
