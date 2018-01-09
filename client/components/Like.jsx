@@ -1,5 +1,12 @@
 'use strict'
 
+/*** ENVIRONMENT ***/
+import dotenv from 'dotenv'
+dotenv.load()
+
+/*** DEVELOPMENT TOOLS ***/
+const DEV = process.env.NODE_ENV === 'development'
+
 /*** COMPONENTS ***/
 //React
 import React, { Component } from 'react'
@@ -22,7 +29,8 @@ export default class Like extends Component {
       empty: !loggedUserLike,
       full: loggedUserLike,
       likes: likes.length,
-      pulse: true
+      pulse: true,
+      noClick: false
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -41,14 +49,16 @@ export default class Like extends Component {
   }
   toggleLikePin() {
     const { img, logged, loggedUser, owner, title } = this.props
+    const { empty, full, likes, pulse } = this.state
     //Only logged users can Like a post
     if (logged) {
       //Quick, client-only response
       this.setState({
-        empty: !this.state.empty,
-        full: !this.state.full,
-        likes: this.state.full ? this.state.likes - 1 : this.state.likes + 1,
-        pulse: !this.state.pulse
+        empty: !empty,
+        full: !full,
+        likes: full ? likes - 1 : likes + 1,
+        pulse: !pulse,
+        noClick: true //Disable clicking on Like until the first response clears
       })
 
       const obj = {
@@ -59,12 +69,16 @@ export default class Like extends Component {
       }
       const data = encodeURIComponent(JSON.stringify(obj))
       f('POST', 'api/toggleLikePin/' + data, response => {
-        //console.log(response)
+        if (DEV) {
+          console.log(response)
+        }
+        //Enable clicking on Like on response
+        this.setState({ noClick: false })
       })
     }
   }
   render() {
-    const { full, empty, likes, pulse } = this.state
+    const { full, empty, likes, noClick, pulse } = this.state
 
     return (
       <span>
@@ -75,7 +89,11 @@ export default class Like extends Component {
             size="large"
             color={full ? 'red' : 'grey'}
             onClick={() => {
-              this.toggleLikePin()
+              if (!noClick) {
+                this.toggleLikePin()
+              } else {
+                console.log('Patience...')
+              }
             }}
           />
         </Transition>
