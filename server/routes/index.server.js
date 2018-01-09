@@ -99,9 +99,10 @@ export const routes = (app, passport) => {
       }
       if (name_view) {
         res.json(name_view)
-      } else {
-        console.log('name_view ERROR')
+      } else if (DEV) {
         res.json('Stranger') //This can be set to whatever is needed-- e.g., a troll's username--to delete awkward submissions manually
+      } else {
+        res.json('Something is wrong...')
       }
     }
   )
