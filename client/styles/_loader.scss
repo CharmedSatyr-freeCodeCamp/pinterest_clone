@@ -11,12 +11,13 @@ https://codepen.io/Siddharth11/pen/xbGrpG
 .predim {
   background: transparent;
   background: rgba(0,0,0, 0.85);
-  top: 0;
-  left: 0;
   bottom: 0;
-  right: 0;
-  position: absolute;
   height: 100vh;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 0;
   width: 100vw;
   z-index: -1;
 }
