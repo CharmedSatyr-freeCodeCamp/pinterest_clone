@@ -1,7 +1,6 @@
 'use strict'
 
 /*** ENVIRONMENT ***/
-const path = process.cwd()
 import dotenv from 'dotenv'
 dotenv.load()
 
