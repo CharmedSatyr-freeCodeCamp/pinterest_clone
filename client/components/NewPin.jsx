@@ -31,28 +31,38 @@ export default class NewPin extends Component {
       visible: false
     }
     this.handleClose = this.handleClose.bind(this)
+    this.handleError = this.handleError.bind(this)
     this.handleImg = this.handleImg.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleTitle = this.handleTitle.bind(this)
   }
   handleClose() {
-    //Toggle visibility to trigger animation
-    this.setState({ image: dummy, title: 'Add a Title!', visible: false })
+    //Reset defaults
+    this.setState({ error: '', image: dummy, title: 'Add a Title!', visible: false })
     //close Modal - this will NOT work if chained to setState like in handleOpen
     //Interval on setTimeout === Transition animation length
     setTimeout(() => this.setState({ modalOpen: false }), 250)
+  }
+  handleError(e) {
+    //Prompt user for valid HTTPS link on failed submission or bad link.
+    const text = 'Use a valid link that starts with HTTPS'
+    this.setState({ error: text, image: dummy })
+    if (e) {
+      e.target.src = dummy //backup at img.src level
+    }
   }
   handleImg() {
     const image = document.getElementById('pinImg').value
     //URL is validated by validator package. Must be HTTPS protocol.
     const options = { protocols: ['https'], require_protocol: true }
     if (isURL(image, options)) {
-      this.setState({
-        image: image
-      })
+      //If there's a good image, clear the error and display the image
+      this.setState({ error: '', image: image })
       return true
     } else {
+      // If there's not a valid image link, always show a dummy
+      this.setState({ image: dummy })
       return false
     }
   }
@@ -61,24 +71,20 @@ export default class NewPin extends Component {
     this.setState({ modalOpen: true }, () => this.setState({ visible: true }))
   }
   handleSubmit() {
+    const { image, title } = this.state
     if (this.handleImg()) {
       const obj = {
-        title: this.state.title !== 'Add a Title!' ? this.state.title : 'Untitled',
-        img: this.state.image,
-        owner: this.props.loggedUser
+        img: image,
+        owner: this.props.loggedUser,
+        title: title !== 'Add a Title!' ? title : 'Untitled'
       }
       const data = encodeURIComponent(JSON.stringify(obj))
       f('POST', '/api/savePin/' + data, response => {
         //console.log(response)
         this.handleClose()
-        this.setState({ error: '' })
       })
     } else {
-      //Prompt user for valid HTTPS link on failed submission.
-      const text = 'Use a valid link that starts with HTTPS'
-      this.setState({
-        error: text
-      })
+      this.handleError()
     }
   }
   handleTitle() {
@@ -117,16 +123,16 @@ export default class NewPin extends Component {
             <Header as="h1" textAlign="center">
               {title}
             </Header>
-            <Image alt={title} src={image} />
+            <Image alt={title} onError={this.handleError} src={image} />
             <br />
-            <Input id="pinTitle" placeholder="Enter a short title" onChange={this.handleTitle} />
+            <Input id="pinTitle" onChange={this.handleTitle} placeholder="Enter a short title" />
             <br />
             <Input
               id="pinImg"
-              placeholder="https://www.website.com/photo.jpg"
               onChange={this.handleImg}
+              placeholder="https://www.website.com/photo.jpg"
             />
-            <div style={{ color: 'red', textAlign: 'center', margin: 7 }}>
+            <div style={{ color: 'red', textAlign: 'center', marginTop: 7 }}>
               <strong>{error}</strong>
             </div>
             <br />
@@ -141,7 +147,7 @@ export default class NewPin extends Component {
     return (
       <span>
         <Button color="blue" content="New Card" onClick={() => this.handleOpen()} icon="plus" />
-        <Transition visible={visible} animation="scale" duration={250}>
+        <Transition animation="scale" duration={250} visible={visible}>
           {newPinModal}
         </Transition>
       </span>
