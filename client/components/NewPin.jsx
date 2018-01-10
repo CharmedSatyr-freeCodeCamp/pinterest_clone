@@ -24,6 +24,7 @@ export default class NewPin extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      error: false,
       image: dummy,
       modalOpen: false,
       title: 'Title',
@@ -38,13 +39,13 @@ export default class NewPin extends Component {
   }
   handleClose() {
     //Reset defaults
-    this.setState({ image: dummy, title: 'Title', visible: false })
+    this.setState({ error: false, image: dummy, title: 'Title', visible: false })
     //close Modal - this will NOT work if chained to setState like in handleOpen
     //Interval on setTimeout === Transition animation length
     setTimeout(() => this.setState({ modalOpen: false }), 250)
   }
   handleError(e) {
-    this.setState({ image: dummy })
+    this.setState({ error: true, image: dummy })
     if (e) {
       e.target.src = dummy //backup at img.src level
     }
@@ -55,7 +56,7 @@ export default class NewPin extends Component {
     const options = { protocols: ['https'], require_protocol: true }
     if (isURL(image, options)) {
       //If there's a good image, clear the error and display the image
-      this.setState({ image: image })
+      this.setState({ error: false, image: image })
       return true
     } else {
       // If there's not a valid image link, always show a dummy
@@ -68,8 +69,8 @@ export default class NewPin extends Component {
     this.setState({ modalOpen: true }, () => this.setState({ visible: true }))
   }
   handleSubmit() {
-    const { image, title } = this.state
-    if (this.handleImg()) {
+    const { error, image, title } = this.state
+    if (this.handleImg() && !error) {
       const obj = {
         img: image,
         owner: this.props.loggedUser,
@@ -121,7 +122,6 @@ export default class NewPin extends Component {
               {title}
             </Header>
             <Image alt={title} onError={this.handleError} src={image} />
-            <br />
             <Popup
               className="hintPopup"
               content="Please use less than 40 characters"
@@ -135,10 +135,10 @@ export default class NewPin extends Component {
                   id="pinTitle"
                   onChange={this.handleTitle}
                   placeholder="My Amazing Fantasy Card"
+                  style={{ marginTop: 6 }}
                 />
               }
             />
-            <br />
             <Popup
               className="hintPopup"
               content="Please use a valid image URL that starts with HTTPS"
@@ -152,12 +152,16 @@ export default class NewPin extends Component {
                   id="pinImg"
                   onChange={this.handleImg}
                   placeholder="https://www.website.com/photo.jpg"
+                  style={{ marginTop: 6 }}
                 />
               }
             />
-            <br />
-            <Button color="blue" onClick={() => this.handleSubmit()}>
-              Submit
+            <Button
+              style={{ marginTop: 6 }}
+              color={error ? 'red' : 'blue'}
+              onClick={() => this.handleSubmit()}
+            >
+              {error ? 'Image required!' : 'Submit'}
             </Button>
           </div>
         </Modal.Content>
