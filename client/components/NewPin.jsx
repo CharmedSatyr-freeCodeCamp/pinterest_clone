@@ -127,7 +127,6 @@ export default class NewPin extends Component {
               content="Please use less than 40 characters"
               flowing
               header="Add a title for your Card"
-              inverted
               on="focus"
               position="left center"
               trigger={
@@ -144,7 +143,6 @@ export default class NewPin extends Component {
               content="Please use a valid image URL that starts with HTTPS"
               flowing
               header="Paste a link to an image"
-              inverted
               on="focus"
               position="left center"
               trigger={
