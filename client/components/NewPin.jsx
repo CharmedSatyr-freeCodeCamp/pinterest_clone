@@ -59,7 +59,7 @@ export default class NewPin extends Component {
       return true
     } else {
       // If there's not a valid image link, always show a dummy
-      this.setState({ image: dummy })
+      this.handleError()
       return false
     }
   }
