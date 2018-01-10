@@ -132,7 +132,7 @@ export default class NewPin extends Component {
               onChange={this.handleImg}
               placeholder="https://www.website.com/photo.jpg"
             />
-            <div style={{ color: 'red', textAlign: 'center', marginTop: 7 }}>
+            <div style={{ color: 'red', textAlign: 'center', margin: 7 }}>
               <strong>{error}</strong>
             </div>
             <br />
