@@ -44,3 +44,12 @@ body {
 .noLike:hover {
   cursor: not-allowed !important;
 }
+
+.hintPopup {
+  background-color: #DB2828 !important;
+
+  &:before {
+    background-color: #DB2828 !important;
+
+  }
+}

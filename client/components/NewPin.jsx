@@ -5,7 +5,7 @@
 import React, { Component } from 'react'
 
 //Semantic UI React
-import { Button, Header, Image, Input, Modal, Transition } from 'semantic-ui-react'
+import { Button, Header, Image, Input, Modal, Popup, Transition } from 'semantic-ui-react'
 
 /*** Image ***/
 //Dummy Image
@@ -24,10 +24,9 @@ export default class NewPin extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      error: '',
       image: dummy,
       modalOpen: false,
-      title: 'Add a Title!',
+      title: 'Title',
       visible: false
     }
     this.handleClose = this.handleClose.bind(this)
@@ -39,15 +38,13 @@ export default class NewPin extends Component {
   }
   handleClose() {
     //Reset defaults
-    this.setState({ error: '', image: dummy, title: 'Add a Title!', visible: false })
+    this.setState({ image: dummy, title: 'Title', visible: false })
     //close Modal - this will NOT work if chained to setState like in handleOpen
     //Interval on setTimeout === Transition animation length
     setTimeout(() => this.setState({ modalOpen: false }), 250)
   }
   handleError(e) {
-    //Prompt user for valid HTTPS link on failed submission or bad link.
-    const text = 'Use a valid link that starts with HTTPS'
-    this.setState({ error: text, image: dummy })
+    this.setState({ image: dummy })
     if (e) {
       e.target.src = dummy //backup at img.src level
     }
@@ -58,7 +55,7 @@ export default class NewPin extends Component {
     const options = { protocols: ['https'], require_protocol: true }
     if (isURL(image, options)) {
       //If there's a good image, clear the error and display the image
-      this.setState({ error: '', image: image })
+      this.setState({ image: image })
       return true
     } else {
       // If there's not a valid image link, always show a dummy
@@ -76,7 +73,7 @@ export default class NewPin extends Component {
       const obj = {
         img: image,
         owner: this.props.loggedUser,
-        title: title !== 'Add a Title!' ? title : 'Untitled'
+        title: title !== 'Title' ? title : 'Untitled'
       }
       const data = encodeURIComponent(JSON.stringify(obj))
       f('POST', '/api/savePin/' + data, response => {
@@ -125,16 +122,39 @@ export default class NewPin extends Component {
             </Header>
             <Image alt={title} onError={this.handleError} src={image} />
             <br />
-            <Input id="pinTitle" onChange={this.handleTitle} placeholder="Enter a short title" />
-            <br />
-            <Input
-              id="pinImg"
-              onChange={this.handleImg}
-              placeholder="https://www.website.com/photo.jpg"
+            <Popup
+              className="hintPopup"
+              content="Please use less than 40 characters"
+              flowing
+              header="Add a title for your Card"
+              inverted
+              on="focus"
+              position="left center"
+              trigger={
+                <Input
+                  id="pinTitle"
+                  onChange={this.handleTitle}
+                  placeholder="My Amazing Fantasy Card"
+                />
+              }
             />
-            <div style={{ color: 'red', textAlign: 'center', margin: 7 }}>
-              <strong>{error}</strong>
-            </div>
+            <br />
+            <Popup
+              className="hintPopup"
+              content="Please use a valid image URL that starts with HTTPS"
+              flowing
+              header="Paste a link to an image"
+              inverted
+              on="focus"
+              position="left center"
+              trigger={
+                <Input
+                  id="pinImg"
+                  onChange={this.handleImg}
+                  placeholder="https://www.website.com/photo.jpg"
+                />
+              }
+            />
             <br />
             <Button color="blue" onClick={() => this.handleSubmit()}>
               Submit
