@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": " \"Build a Pinterest Clone\" is a project required for freeCodeCamp's Back End Development Certification.",
   "main": "server/server.js",
-  "repository": "https://github.com/CharmedSatyr/pinterest_clone.git",
+  "repository": "https://github.com/CharmedSatyr-freeCodeCamp/pinterest_clone.git",
   "author": "CharmedSatyr <z@charmed.tech>",
   "license": "GPL-3.0",
   "private": false,

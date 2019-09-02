@@ -14,7 +14,7 @@ const Footer = () => {
       <Container>
         <Menu.Item
           as="a"
-          href="https://github.com/CharmedSatyr/pinterest_clone/"
+          href="https://github.com/CharmedSatyr-freeCodeCamp/pinterest_clone/"
           rel="noopener"
           target="_blank"
         >
@@ -22,7 +22,7 @@ const Footer = () => {
         </Menu.Item>
         <Menu.Item
           as="a"
-          href="https://github.com/CharmedSatyr/pinterest_clone/blob/master/LICENSE"
+          href="https://github.com/CharmedSatyr-freeCodeCamp/pinterest_clone/blob/master/LICENSE"
           rel="noopener"
           target="_blank"
         >
